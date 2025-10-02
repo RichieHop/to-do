@@ -53,7 +53,7 @@ header{
   padding-top: 0;
 }
 
-#homeButton,#menuButton,#aboutButton,#contactButton{
+#homeButton,#projectsButton,#tasksButton{
   font-weight: 300;
   font-size: 1.25rem;
   border: none;
@@ -61,7 +61,7 @@ header{
   background-color: bisque;
 }
 
-#homeButton:hover,#menuButton:hover,#aboutButton:hover,#contactButton:hover{
+#homeButton:hover,#projectsButton:hover,#tasksButton:hover{
   font-weight: 900;
 }
 
