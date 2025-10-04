@@ -7,27 +7,27 @@ export default function loadHome() {
     document.getElementById("tasksButton").style.background='transparent';
     // document.getElementById("contactButton").style.background='transparent';
 
-    const content = document.querySelector('#content'); 
-    content.innerHTML = '';
+    // const content = document.querySelector('#content'); 
+    // content.innerHTML = '';
 
-    const menu = document.querySelector('#menu');
-    menu.innerHTML = '';
+    const projects = document.querySelector('#projects');
+    // projects.innerHTML = '';
 
-    const greeting = document.createElement('p');
+    // const greeting = document.createElement('p');
     // const mission = document.createElement('p2'); 
     // const banner = document.createElement('img'); 
     // const blankLine = document.createElement("p2");
 
-    greeting.setAttribute("id", "greeting")
+    // greeting.setAttribute("id", "greeting")
 
-    greeting.textContent = 'Home'; 
+    // greeting.textContent = 'Home'; 
     // mission.innerHTML = "At <strong>Deli-Shus</strong> you'll find something different for the discerning palate, along with some old favourites."; 
     // banner.src = bannerIMG; 
     // banner.alt = 'Food, glorious food';
     // banner.style.maxWidth = '100%';
     // banner.style.height = 'auto';
 
-    content.appendChild(greeting); 
+    // projects.appendChild(greeting); 
     // content.appendChild(banner);
     // content.appendChild(blankLine);
     // content.appendChild(mission);

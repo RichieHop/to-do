@@ -1,17 +1,41 @@
-export default function loadProjects() {
+export function loadProjects() {
     //Set the nav button background colours.
     document.getElementById("homeButton").style.background='transparent';
     document.getElementById("projectsButton").style.background='lightgray';
     document.getElementById("tasksButton").style.background='transparent';
 
-    const content = document.querySelector('#content');
-    content.innerHTML = '';
+    // const content = document.querySelector('#content');
+    // content.innerHTML = '';
 
-    const menu = document.querySelector('#menu');
-    menu.innerHTML = '';
+    const projects = document.querySelector('#projects');
+    // projects.innerHTML = '';
 
-    const title = document.createElement('p');
-    title.textContent = 'Projects';
+    // const title = document.createElement('p');
+    // title.textContent = 'Projects';
+
+    const projectsArray = [
+        {id: 1, title: "General", sub_project_of: 0},
+        {id: 2, title: "Work", sub_project_of: 0},
+        {id: 3, title: "Health & Fitness", sub_project_of: 0},
+        {id: 4, title: "Gym", sub_project_of: 3}
+    ];
+
+    console.log(projectsArray);
+
+
+    let list = document.getElementById("projectsList");
+
+    // projectsArray.forEach((item) => {
+    //     let li = document.createElement("li");
+    //     li.innerText = projectsArray[item];
+    //     list.appendChild(li);
+    // });
+
+    for (let i = 0; i < projectsArray.length; ++i) {
+        let li = document.createElement('li');
+        li.innerText = projectsArray[i][0];
+        list.appendChild(li);
+    }
 
     // const contactTel = document.createElement('p2');
     // const contactAdd1 = document.createElement('p2');
@@ -24,10 +48,19 @@ export default function loadProjects() {
     // contactAdd3.textContent = `Wirral`;
     // contactPostCode.textContent = `CH47 1AA`;
 
-    content.appendChild(title);
+    // projects.appendChild(title);
+    
     // content.appendChild(contactAdd1);
     // content.appendChild(contactAdd2);
     // content.appendChild(contactAdd3);
     // content.appendChild(contactPostCode);
     // content.appendChild(contactTel);                
+}
+
+export function createProject() {
+
+}
+
+export function deleteProject() {
+
 }

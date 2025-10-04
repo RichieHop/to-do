@@ -7,23 +7,23 @@
 // import chocolateCakeImage from "./images/chocolate_orange_cake.jpg";
 // import tarteAuCitronImage from "./images/tarte_au_citron.jpg";
    
-export default function loadTasks() {
+export function loadTasks() {
     //Set the nav button background colours.
     document.getElementById("homeButton").style.background='transparent';
     document.getElementById("projectsButton").style.background='transparent';
     document.getElementById("tasksButton").style.background='lightgray';
 
 
-    const content = document.querySelector('#content');
-    content.innerHTML = '';
+    // const content = document.querySelector('#content');
+    // content.innerHTML = '';
 
-    const menu = document.querySelector('#menu');
-    menu.innerHTML = '';
+    const menu = document.querySelector('#projects');
+    // menu.innerHTML = '';
 
-    const title = document.createElement('p');
-    title.textContent = 'Tasks';
+    // const title = document.createElement('p');
+    // title.textContent = 'Tasks';
 
-    content.appendChild(title);
+    // content.appendChild(title);
 
 //     menu.appendChild(
 //         createMenuItem(
@@ -107,4 +107,12 @@ export default function loadTasks() {
 
     // return menuItem;
     return;
+}
+
+export function createTask() {
+
+}
+
+export function deleteTask() {
+
 }
