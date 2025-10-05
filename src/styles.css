@@ -5,10 +5,22 @@ body {
 
 span{
   font-weight: 600;
-  font-size: 3rem;
+  font-size: 2rem;
   display: inline-block;
   width: 100%;
   text-align: center;
+}
+
+#projectsList{
+  font-weight: 600;
+  font-size: 2rem;
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  list-style-type: none;
+  margin-left: 10rem;
+  margin-top: 5rem;
+  white-space: pre;
 }
 
 p{
@@ -34,11 +46,9 @@ p3{
   text-align: center;
 }
 
-#content{
+/* #content{
   text-align: center;
-  /* position: sticky;
-  top: 0;    */
-}
+} */
 
 header{
   text-align: center;
@@ -47,7 +57,7 @@ header{
   background-color: gray;
 }
 
-#nav_buttons{
+/* #nav_buttons{
   text-align: center;
   margin-top: 0;
   padding-top: 0;
@@ -84,4 +94,4 @@ header{
 
 .menu-item img {
   width: 100%;
-}
+} */

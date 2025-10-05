@@ -1,18 +1,14 @@
 export function loadProjects() {
-    //Set the nav button background colours.
-    document.getElementById("homeButton").style.background='transparent';
-    document.getElementById("projectsButton").style.background='lightgray';
-    document.getElementById("tasksButton").style.background='transparent';
+
+    const projectsArray = [
+        { ID: 1, Name: 'General', Description: 'Default project' },
+        { ID: 2, Name: 'Work', Description: 'Work-based tasks' },
+        { ID: 3, Name: 'Health and Fitness', Description: 'Health and fitness tasks' },
+        { ID: 4, Name: 'Gym', Description: 'Gym tasks, sub-project of Health and Fitness' }
+    ]    
 
     const projects = document.querySelector('#projects');
     projects.innerHTML = '';
-
-    const projectsArray = [
-        [1, "General", 0],
-        [2, "Work", 0],
-        [3, "Health & Fitness", 0],
-        [4, "Gym", 3]
-    ];
 
     const projectsUL = document.createElement('ul');
     projectsUL.setAttribute("id", "projectsList");
@@ -22,10 +18,15 @@ export function loadProjects() {
 
     for (let i = 0; i < projectsArray.length; ++i) {
         let li = document.createElement('li');
-        li.innerText = projectsArray[i][1];
+        li.innerText = projectsArray[i].Name;
         list.appendChild(li);
-        console.log(projectsArray[i][1]);
     }
+
+    // let table = document.querySelector("table");
+    // let data = Object.keys(projectsArray[0]);
+    // generateTable(table, projectsArray);
+    // generateTableHead(table, data);
+
 }
 
 export function createProject() {
@@ -35,3 +36,25 @@ export function createProject() {
 export function deleteProject() {
 
 }
+
+// function generateTableHead(table, data) {
+//   let thead = table.createTHead();
+//   let row = thead.insertRow();
+//   for (let key of data) {
+//     let th = document.createElement("th");
+//     let text = document.createTextNode(key);
+//     th.appendChild(text);
+//     row.appendChild(th);
+//   }
+// }
+
+// function generateTable(table, data) {
+//   for (let element of data) {
+//     let row = table.insertRow();
+//     for (let key in element) {
+//       let cell = row.insertCell();
+//       let text = document.createTextNode(element[key]);
+//       cell.appendChild(text);
+//     }
+//   }
+// }
