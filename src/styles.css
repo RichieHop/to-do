@@ -1,26 +1,54 @@
+* {
+  font-family: "Times New Roman", Arial, sans-serif;
+}
+
 body {
   background-color: bisque;
   margin-top: 0px;
 }
 
-span{
+header{
+  position: sticky;
+  top: 0;
+  background-color: rgb(83, 178, 209);
+  padding-top: 0.5rem;
+}
+
+header span{
   font-weight: 600;
-  font-size: 2rem;
-  display: inline-block;
+  font-size: 3rem;
   width: 100%;
-  text-align: center;
+  margin-left: 1.25rem;
 }
 
 #projectsList{
-  font-weight: 600;
-  font-size: 2rem;
+  /* font-weight: 100; */
+  /* font-family: "Times New Roman", Arial, sans-serif; */
+  font-size: 1.5rem;
   display: inline-block;
-  width: 100%;
+  width: 20%;
   text-align: left;
   list-style-type: none;
-  margin-left: 10rem;
+  margin-left: 3rem;
   margin-top: 5rem;
   white-space: pre;
+}
+
+li{
+  padding: 0.25rem;
+}
+
+li:hover{
+  font-weight: 900;
+}
+
+/* li:not(:last-child) {
+    margin-bottom: 5px;
+} */
+
+/* Zebra striped list */
+li:nth-child(odd) {
+  background-color: rgb(83, 178, 209);
 }
 
 p{
@@ -49,13 +77,6 @@ p3{
 /* #content{
   text-align: center;
 } */
-
-header{
-  text-align: center;
-  position: sticky;
-  top: 0;
-  background-color: gray;
-}
 
 /* #nav_buttons{
   text-align: center;
