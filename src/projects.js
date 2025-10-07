@@ -4,7 +4,27 @@ export function loadProjects() {
         { ID: 1, Name: 'Default', Description: 'Default project' },
         { ID: 2, Name: 'Work', Description: 'Work-based tasks' },
         { ID: 3, Name: 'Health and Fitness', Description: 'Health and fitness tasks' },
-        { ID: 4, Name: 'Gym', Description: 'Gym tasks, sub-project of Health and Fitness' }
+        { ID: 4, Name: 'Gym', Description: 'Gym tasks, sub-project of Health and Fitness' },
+        { ID: 5, Name: 'Finance', Description: 'Finance project' },
+        { ID: 6, Name: 'Car', Description: 'Car tasks' },
+        { ID: 7, Name: 'GP', Description: 'GP tasks' },
+        { ID: 8, Name: 'Food', Description: 'Food project' },
+        { ID: 9, Name: 'PC', Description: 'PC tasks' },
+        { ID: 10, Name: 'Javascript', Description: 'WJavascript tasks' },
+        { ID: 11, Name: 'HTML', Description: 'HTML tasks' },
+        { ID: 12, Name: 'CSS', Description: 'CSS tasks' }
+        // { ID: 13, Name: 'Default', Description: 'Default project' },
+        // { ID: 14, Name: 'Work', Description: 'Work-based tasks' },
+        // { ID: 15, Name: 'Health and Fitness', Description: 'Health and fitness tasks' },
+        // { ID: 16, Name: 'Gym', Description: 'Gym tasks, sub-project of Health and Fitness' },
+        // { ID: 17, Name: 'Default', Description: 'Default project' },
+        // { ID: 18, Name: 'Work', Description: 'Work-based tasks' },
+        // { ID: 19, Name: 'Health and Fitness', Description: 'Health and fitness tasks' },
+        // { ID: 20, Name: 'Gym', Description: 'Gym tasks, sub-project of Health and Fitness' },
+        // { ID: 21, Name: 'Default', Description: 'Default project' },
+        // { ID: 22, Name: 'Work', Description: 'Work-based tasks' },
+        // { ID: 23, Name: 'Health and Fitness', Description: 'Health and fitness tasks' },
+        // { ID: 24, Name: 'Gym', Description: 'Gym tasks, sub-project of Health and Fitness' }
     ]    
 
     // Sort the array by name

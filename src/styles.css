@@ -21,9 +21,11 @@ header span{
   margin-left: 1.25rem;
 }
 
-#projectsList{
-  /* font-weight: 100; */
-  /* font-family: "Times New Roman", Arial, sans-serif; */
+.projectsContainer {
+    display:inline-flex;
+}
+
+/* #projectsList{
   font-size: 1.5rem;
   display: inline-block;
   width: 20%;
@@ -32,6 +34,30 @@ header span{
   margin-left: 3rem;
   margin-top: 5rem;
   white-space: pre;
+} */
+
+#projectsList {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  height: 20rem;
+  width: 30rem;
+  margin-left: 3rem;
+  margin-top: 3rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+  font-size: 1.5rem;
+}
+
+.tasks {
+    display: flex;
+    align-items: flex-start;
+    height: 30rem;
+    width: 30rem;
+    margin-left: 1rem;
+    margin-top: 3rem;
+    padding-left: 0.5rem;
 }
 
 li{
