@@ -25,17 +25,6 @@ header span{
     display:inline-flex;
 }
 
-/* #projectsList{
-  font-size: 1.5rem;
-  display: inline-block;
-  width: 20%;
-  text-align: left;
-  list-style-type: none;
-  margin-left: 3rem;
-  margin-top: 5rem;
-  white-space: pre;
-} */
-
 #projectsList {
   list-style-type: none;
   display: flex;
@@ -51,13 +40,25 @@ header span{
 }
 
 .tasks {
-    display: flex;
-    align-items: flex-start;
-    height: 30rem;
-    width: 30rem;
-    margin-left: 1rem;
-    margin-top: 3rem;
-    padding-left: 0.5rem;
+  display: flex;
+  align-items: flex-start;
+  height: 30rem;
+  width: 60rem;
+  margin-left: 1rem;
+  margin-top: 2rem;
+  padding-left: 0.5rem;
+    font-size: 1.5rem;
+}
+
+#tasksList {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  height: 20rem;
+  width: 60rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
 }
 
 li{
