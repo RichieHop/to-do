@@ -22,7 +22,7 @@ if (isMobileDevice) {
     console.log("You are using Desktop");
 }
 
-// Always load projects'
+// Always load projects and tasks'
 loadProjects();
 loadTasks();
 

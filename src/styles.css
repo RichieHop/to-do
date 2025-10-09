@@ -10,7 +10,7 @@ body {
 header{
   position: sticky;
   top: 0;
-  background-color: rgb(83, 178, 209);
+  background-color: rgb(240, 181, 110);
   padding-top: 0.5rem;
 }
 
@@ -39,26 +39,43 @@ header span{
   font-size: 1.5rem;
 }
 
-.tasks {
+.todo {
   display: flex;
-  align-items: flex-start;
-  height: 30rem;
-  width: 60rem;
+  /* align-items: center; */
+  height: 1rem;
+  padding: 1rem;
+  margin-left: 5rem;
+}
+
+/* Zebra striped tasks list */
+.todo:nth-child(odd) {
+  background-color: rgb(240, 181, 110);
+}
+
+.todo_title {
+  width: 15rem;
+  margin-right: auto;
+  font-weight: 300;
+}
+
+.todo_description {
+  width: 25rem;
+  margin-right: auto;
+  font-weight: 300;
+}
+
+.todo_date {
+  margin-right: 1rem;
+  width: 10rem;
+}
+
+.tasks {
+  height: 20rem;
+  width: 80rem;
   margin-left: 1rem;
   margin-top: 2rem;
   padding-left: 0.5rem;
-    font-size: 1.5rem;
-}
-
-#tasksList {
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
-  height: 20rem;
-  width: 60rem;
-  overflow-y: auto;
-  overflow-x: hidden;
-  overflow-wrap: break-word;
+  font-size: 1.5rem;
 }
 
 li{
@@ -73,9 +90,9 @@ li:hover{
     margin-bottom: 5px;
 } */
 
-/* Zebra striped list */
+/* Zebra striped projects list */
 li:nth-child(odd) {
-  background-color: rgb(83, 178, 209);
+  background-color: rgb(240, 181, 110);
 }
 
 p{
