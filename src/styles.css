@@ -60,7 +60,9 @@ header span{
 }
 
 .task:first-child {
-    font-weight: 600;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
 }
 
 /* Zebra striped tasks list */
