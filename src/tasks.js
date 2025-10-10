@@ -25,7 +25,7 @@ export function loadTasks() {
             Created_Date: 7/10/2025, Sequence_Number: 11 },
     ]    
 
-    // Sort the array by name
+    // Sort the array by sequence number
     tasksArray.sort(function(a, b){
         let x = a.Sequence_Number;
         let y = b.Sequence_Number;
@@ -34,55 +34,55 @@ export function loadTasks() {
         return 0;
     }); 
 
-    const tasks = document.querySelector('#tasks');
-    tasks.innerHTML = '';
+    const tasksContainer = document.querySelector('#tasksContainer');
+    tasksContainer.innerHTML = '';
 
     for (let i = 0; i < tasksArray.length; ++i) {
 
         // Create the main body of the task
-        const toDoBody = document.createElement('div');
-        toDoBody.classList.add('todo');
-        toDoBody.classList.add(`priority-${tasksArray[i].Priority}`);
+        const taskBody = document.createElement('div');
+        taskBody.classList.add('task');
+        taskBody.classList.add(`priority-${tasksArray[i].Priority}`);
         // Set the data index equal to the array counter, and data project equal to the project name
-        toDoBody.setAttribute('data-index', i);
-        toDoBody.setAttribute('data-project', `${tasksArray[i].Name}`)
+        taskBody.setAttribute('data-index', i);
+        taskBody.setAttribute('data-project', `${tasksArray[i].Name}`)
             
         // Create the task title
-        const toDoTitle = document.createElement('div');
-        toDoTitle.classList.add('todo_title');
-        toDoTitle.textContent = tasksArray[i].Name;
-        toDoBody.appendChild(toDoTitle);
+        const taskTitle = document.createElement('div');
+        taskTitle.classList.add('task_title');
+        taskTitle.textContent = tasksArray[i].Name;
+        taskBody.appendChild(taskTitle);
 
         // Create the task description
-        const toDoDescription = document.createElement('div');
-        toDoDescription.classList.add('todo_description');
-        toDoDescription.textContent = tasksArray[i].Description;
-        toDoBody.appendChild(toDoDescription);
+        const taskDescription = document.createElement('div');
+        taskDescription.classList.add('task_description');
+        taskDescription.textContent = tasksArray[i].Description;
+        taskBody.appendChild(taskDescription);
 
         // Create the task due date, format dd/mm/yyyy.
-        const toDoDate = document.createElement('div');
-        toDoDate.classList.add('todo_date');
+        // const taskDate = document.createElement('div');
+        // taskDate.classList.add('task_date');
 
         // const dateObject = new Date(tasksArray[i].Due_Date);
         // const dateMonth = format(dateObject, 'MMM');
         // const dateDay = format(dateObject, 'do');
         // const dateFormated = `${dateMonth} ${dateDay}`;
 
-        // toDoDate.textContent = dateFormated;
-        // toDoDate.textContent = datestring;
-        // toDoDate.textContent = tasksArray[i].Due_Date;
+        // taskDate.textContent = dateFormated;
+        // taskDate.textContent = datestring;
+        // taskDate.textContent = tasksArray[i].Due_Date;
 
-        let date = new Date(tasksArray[i].Due_Date);
-        // console.log(date);
-        let year = Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
-        let month = Intl.DateTimeFormat('en', { month: 'short' }).format(date);
-        let day = Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
-        let formattedDate = (`${day}-${month}-${year}`);
-        // console.log(formattedDate);
-        toDoDate.textContent = formattedDate;
-        toDoBody.appendChild(toDoDate);
+        // let date = new Date(tasksArray[i].Due_Date);
+        // // console.log(date);
+        // let year = Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
+        // let month = Intl.DateTimeFormat('en', { month: 'short' }).format(date);
+        // let day = Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+        // let formattedDate = (`${day}-${month}-${year}`);
+        // // console.log(formattedDate);
+        // taskDate.textContent = formattedDate;
+        // taskBody.appendChild(taskDate);
 
-        tasks.appendChild(toDoBody);
+        tasksContainer.appendChild(taskBody);
 
     }
 

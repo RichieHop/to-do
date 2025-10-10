@@ -39,43 +39,46 @@ header span{
   font-size: 1.5rem;
 }
 
-.todo {
+.tasksContainer {
+  height: 20rem;
+  width: 80rem;
+  margin-left: 1rem;
+  margin-top: 3rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+  /* padding-left: 0.5rem; */
+  font-size: 1.5rem;
+}
+
+.task {
   display: flex;
-  /* align-items: center; */
+  align-items: center;
   height: 1rem;
-  padding: 1rem;
+  padding: 0.5rem;
   margin-left: 5rem;
 }
 
 /* Zebra striped tasks list */
-.todo:nth-child(odd) {
+.task:nth-child(odd) {
   background-color: rgb(240, 181, 110);
 }
 
-.todo_title {
-  width: 15rem;
+.task_title {
+  width: 10rem;
   margin-right: auto;
   font-weight: 300;
 }
 
-.todo_description {
-  width: 25rem;
+.task_description {
+  width: 30rem;
   margin-right: auto;
   font-weight: 300;
 }
 
-.todo_date {
+.task_date {
   margin-right: 1rem;
   width: 10rem;
-}
-
-.tasks {
-  height: 20rem;
-  width: 80rem;
-  margin-left: 1rem;
-  margin-top: 2rem;
-  padding-left: 0.5rem;
-  font-size: 1.5rem;
 }
 
 li{
