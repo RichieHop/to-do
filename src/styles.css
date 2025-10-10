@@ -59,6 +59,10 @@ header span{
   margin-left: 5rem;
 }
 
+.task:first-child {
+    font-weight: 600;
+}
+
 /* Zebra striped tasks list */
 .task:nth-child(odd) {
   background-color: rgb(240, 181, 110);
@@ -67,18 +71,23 @@ header span{
 .task_title {
   width: 10rem;
   margin-right: auto;
-  font-weight: 300;
+  /* font-weight: 300; */
 }
 
 .task_description {
   width: 30rem;
   margin-right: auto;
-  font-weight: 300;
+  /* font-weight: 300; */
 }
 
-.task_date {
+.task_due_date {
   margin-right: 1rem;
   width: 10rem;
+}
+
+.task_completed_date {
+  margin-right: 1rem;
+  width: 12rem;
 }
 
 li{
