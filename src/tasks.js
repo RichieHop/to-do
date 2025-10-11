@@ -1,5 +1,4 @@
 import {format} from "date-fns"
-// import { el } from "date-fns/locale";
 
 export function loadTasks() {
 
@@ -27,6 +26,27 @@ export function loadTasks() {
         { ID: 11, Name: 'Task 11', Description: 'Task 11', Priority: "Medium", Due_Date: "2025-10-30", Project_ID: 6, Completed_Date: null, 
             Created_Date: 7/10/2025, Sequence_Number: 11 },
     ]    
+
+// if there is no local storage, populate todo list object with sample items
+// if (!localStorage.getItem('projects')) {
+//     projectsArray.Default.push(projectsManager.createToDo("brush teeth", "low", "2021-12-12", " with colgate", "home", true));
+//     projectsArray.Default.push(projectsManager.createToDo("get dressed", "high", "2021-11-11", "singlet cos its hot", "home"));
+//     projectsArray.Default.push(projectsManager.createToDo("feed jimmy", "medium", "2021-06-09", "only the finest bickies", "home", true));
+
+//     // projectsArray.today.push(projectsManager.createToDo("get mail", "medium", "2021-06-09", "im expecting something", "today"));
+//     // projprojectsArrayects.today.push(projectsManager.createToDo("cook dinner", "medium", "2021-06-09", "juicy steak", "today", true));
+
+//     // projectsArray.week.push(projectsManager.createToDo("sport", "medium", "2021-06-09", "", "week"));
+
+//     projectsArray.Gym.push(projectsManager.createToDo("swim", "medium", "2021-06-09", "", "Gym", true));
+//     projectsArray.Gym.push(projectsManager.createToDo("walk", "high", "2021-06-09", "", "Gym"));
+//     projectsArray.Gym.push(projectsManager.createToDo("weights", "low", "2021-06-09", "", "Gym"));
+    
+//     projectsArray.JavaScript.push(projectsManager.createToDo("learn webkit", "high", "2021-06-09", "", "Study", true));
+//     projectsArray.JavaScript.push(projectsManager.createToDo("learn react", "medium", "2021-06-09", "", "Study"));
+
+//     projectsArray.Work.push(projectsManager.createToDo("get that report on johnson's desk", "low", "2021-06-09", "", "Work"));
+// }
 
     // Sort the array by sequence number
     tasksArray.sort(function(a, b){

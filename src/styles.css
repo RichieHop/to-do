@@ -39,6 +39,30 @@ header span{
   font-size: 1.5rem;
 }
 
+.project_title{
+  font-weight: 900;
+  background-color: rgb(240, 181, 110);
+    padding: 0.25rem;
+}
+
+li{
+  padding: 0.25rem;
+}
+
+li:hover{
+  font-weight: 900;
+  color: blue;
+}
+
+/* li:not(:last-child) {
+    margin-bottom: 5px;
+} */
+
+/* Zebra striped projects list */
+li:nth-child(odd) {
+  background-color: rgb(240, 181, 110);
+}
+
 .tasksContainer {
   height: 20rem;
   width: 80rem;
@@ -47,7 +71,6 @@ header span{
   overflow-y: auto;
   overflow-x: hidden;
   overflow-wrap: break-word;
-  /* padding-left: 0.5rem; */
   font-size: 1.5rem;
 }
 
@@ -73,13 +96,16 @@ header span{
 .task_title {
   width: 10rem;
   margin-right: auto;
-  /* font-weight: 300; */
+}
+
+.task_title:hover{
+  font-weight: 900;
+  color: blue;
 }
 
 .task_description {
   width: 30rem;
   margin-right: auto;
-  /* font-weight: 300; */
 }
 
 .task_due_date {
@@ -92,85 +118,26 @@ header span{
   width: 12rem;
 }
 
-li{
-  padding: 0.25rem;
+#nav_buttons{
+  text-align: center;
+  /* margin-top: 0;
+  padding-top: 0; 
+  border: 4rem; */
 }
 
-li:hover{
-  font-weight: 900;
+button{
+  margin-left: 2rem;
 }
 
-/* li:not(:last-child) {
-    margin-bottom: 5px;
-} */
-
-/* Zebra striped projects list */
-li:nth-child(odd) {
+#newProjectButton,#newTaskButton,#deleteProjectButton,#deleteTaskButton{
+  font-weight: 300;
+  font-size: 2rem;
+  /* border-left: 4rem; */
+  border: none;
+  border-radius: 15px;
   background-color: rgb(240, 181, 110);
 }
 
-p{
-  font-weight: 600;
-  font-size: 2rem;
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-}
-
-p2{
-  font-size: 1rem;
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-}
-
-p3{
-  font-weight: 600;  
-  font-size: 1rem;
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-}
-
-/* #content{
-  text-align: center;
-} */
-
-/* #nav_buttons{
-  text-align: center;
-  margin-top: 0;
-  padding-top: 0;
-}
-
-#homeButton,#projectsButton,#tasksButton{
-  font-weight: 300;
-  font-size: 1.25rem;
-  border: none;
-  border-radius: 15px;
-  background-color: bisque;
-}
-
-#homeButton:hover,#projectsButton:hover,#tasksButton:hover{
+#newProjectButton:hover,#newTaskButton:hover,#deleteProjectButton:hover,#deleteTaskButton:hover{
   font-weight: 900;
 }
-
-#menu {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem, 2rem;
-  width: 60%;
-  margin: auto;
-}
-
-.menu-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100px;
-  padding: 8rem;
-}
-
-.menu-item img {
-  width: 100%;
-} */
