@@ -1,34 +1,50 @@
 export function loadProjects() {
 
 // Retrieve project data from local storage if it exists, otherwise create new sample projects
-    const projectsArray = JSON.parse(localStorage.getItem('projects')) || [
-        { ID: 1, Name: 'Default', Description: 'Default project' },
-        { ID: 2, Name: 'Work', Description: 'Work-based tasks' },
-        { ID: 3, Name: 'Health and Fitness', Description: 'Health and fitness tasks' },
-        { ID: 4, Name: 'Gym', Description: 'Gym tasks, sub-project of Health and Fitness' },
-        { ID: 5, Name: 'Finance', Description: 'Finance project' },
-        { ID: 6, Name: 'Car', Description: 'Car tasks' },
-        { ID: 7, Name: 'GP', Description: 'GP tasks' },
-        { ID: 8, Name: 'Food', Description: 'Food project' },
-        { ID: 9, Name: 'PC', Description: 'PC tasks' },
-        { ID: 10, Name: 'Javascript', Description: 'Javascript tasks' },
-        { ID: 11, Name: 'HTML', Description: 'HTML tasks' },
-        { ID: 12, Name: 'CSS', Description: 'CSS tasks' }
-    ]
+    const projectsArray = JSON.parse(localStorage.getItem('projects')) || {
+         'Default': [] ,
+         'Work': [] ,
+         'Health and Fitness': [] ,
+         'Gym': [] ,
+         'Finance': [] ,
+         'Car': [] ,
+         'GP': [] ,
+         'Food': [] ,
+         'PC': [] ,
+         'Javascript': [] ,
+         'HTML': [] ,
+         'CSS': []
+    }
 
-
+    console.log(projectsArray);
+    
 if (!localStorage.getItem('projects')) {
+
+    // ID, Name, Description, Priority, Due_Date, Project_ID, Completed_Date, Created_Date, Sequence_Number
+    projectsArray.Car.push(projectsManager.createToDo("1", "First task", "Book service for December", "Low", "2025-10-30", 6, "", "2025-10-07", 1));
+    projectsArray.Car.push(projectsManager.createToDo("2", "Dash-Cam", "Check dash-cams with main dealer", "Medium", "2025-11-30", 6, "", "2025-10-07", 1));
+    projectsArray.Car.push(projectsManager.createToDo("3", "Wash", "Wash exterior", "Low", "2025-10-20", 6, "", "2025-10-07", 1));
+    projectsArray.Car.push(projectsManager.createToDo("4", "Vacuum", "Vacuum interior and boot", "Low", "2025-10-28", 6, "", "2025-10-07", 1));
+    projectsArray.Car.push(projectsManager.createToDo("5", "Clean windows", "Use elbow grease window cleaner", "Low", "2025-10-29", 6, "", "2025-10-07", 1));
+    projectsArray.Car.push(projectsManager.createToDo("6", "Air Freshener", "Check and replace air freshener if necessary", "Low", "2025-10-30", 6, "", "2025-10-07", 1));
+    projectsArray.Car.push(projectsManager.createToDo("7", "Fuel", "Check local prices and fill tank at cheapest", "Low", "2025-10-30", 6, "", "2025-10-07", 1));
+    projectsArray.Car.push(projectsManager.createToDo("8", "Speech recognition", "Check how to start, end and use speech recognition system", "Low", "2025-10-30", 6, "", "2025-10-07", 1));
+    projectsArray.Car.push(projectsManager.createToDo("9", "Task 9", "Task 9 detail", "Low", "2025-10-30", 6, "", "2025-10-07", 1));
+    projectsArray.Car.push(projectsManager.createToDo("10", "Task 10", "Task 10 detail", "Low", "2025-10-30", 6, "", "2025-10-07", 1));
+    projectsArray.Car.push(projectsManager.createToDo("11", "Task 11", "Task 11 detail", "Low", "2025-10-30", 6, "", "2025-10-07", 1));
+
     localStorage.setItem('projects', JSON.stringify(projectsArray));
+
 }
 
     // Sort the array by name
-    projectsArray.sort(function(a, b){
-        let x = a.Name.toLowerCase();
-        let y = b.Name.toLowerCase();
-        if (x < y) {return -1;}
-        if (x > y) {return 1;}
-        return 0;
-    }); 
+    // projectsArray.sort(function(a, b){
+    //     let x = a.Name.toLowerCase();
+    //     let y = b.Name.toLowerCase();
+    //     if (x < y) {return -1;}
+    //     if (x > y) {return 1;}
+    //     return 0;
+    // }); 
 
     const projects = document.querySelector('#projects');
     projects.innerHTML = '';
@@ -45,13 +61,15 @@ if (!localStorage.getItem('projects')) {
     projectTitle.textContent = "Projects";
     list.appendChild(projectTitle);
 
-    for (let i = 0; i < projectsArray.length; ++i) {
-        let li = document.createElement('li');
-        li.innerText = projectsArray[i].Name;
-        list.appendChild(li);
-        li.addEventListener('click', e => projectsManager.changeFolder(e, projectsArray[i].Name));
-    }
+    const projectsObject = Object.assign({}, JSON.parse(localStorage.getItem('projects')));
 
+    for (const project in projectsObject) {
+        let li = document.createElement('li');
+        li.innerText = project;
+        list.appendChild(li);
+        li.addEventListener('click', e => projectsManager.changeFolder(e, projectsArray[project]));
+    }
+        
 }
 
 export function createProject() {
@@ -106,20 +124,17 @@ export const projectsManager = (function () {
         return currentProject;
     }
 
-    // // To-do factory function
+    // To-do factory function
+    // ID, Name, Description, Priority, Due_Date, Project_ID, Completed_Date, Created_Date, Sequence_Number
     // function createToDo(name, priority, date, details, project, checked=false) {
-    //     return {
-    //         name,
-    //         priority,
-    //         date,
-    //         details,
-    //         project,
-    //         checked
-    //     }
-    // }
+    function createToDo(ID, Name, Description, Priority, Due_Date, Project_ID, Completed_Date, Created_Date, Sequence_Number) {
+        return {
+            ID, Name, Description, Priority, Due_Date, Project_ID, Completed_Date, Created_Date, Sequence_Number
+        }
+    }
 
-    // // retrieves the data entered to the new to-do form and creates a new to-do
-    // // and then displays it to the dom
+    // retrieves the data entered to the new to-do form and creates a new to-do
+    // and then displays it to the dom
     // function addNewToDo(e, toDoList, display, overlay, form) {
 
     //     // stop page from refreshing after each submit
@@ -193,7 +208,7 @@ export const projectsManager = (function () {
     //     overlay.classList.toggle('overlay-edit-invisible');
     //     form.classList.toggle('edit-popup-open');
 
-    //     // console.log(document.querySelector('.edit-popup__input').value);
+        // console.log(document.querySelector('.edit-popup__input').value);
         
     // }
 
@@ -366,9 +381,9 @@ export const projectsManager = (function () {
 
     return {
         changeCurrentProject,
-        changeFolder
+        changeFolder,
         // getCurrentProject,
-        // createToDo,
+        createToDo
         // addNewToDo,
         // editToDo,
         // deleteToDo,

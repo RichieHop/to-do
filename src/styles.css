@@ -70,8 +70,9 @@ li:nth-child(odd) {
   margin-top: 3rem;
   overflow-y: auto;
   overflow-x: hidden;
-  overflow-wrap: break-word;
-  font-size: 1.5rem;
+  /* overflow-wrap: break-word; */
+  text-wrap: nowrap;
+  font-size: 1.0rem;
 }
 
 .task {
@@ -96,6 +97,9 @@ li:nth-child(odd) {
 .task_title {
   width: 10rem;
   margin-right: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .task_title:hover{
@@ -104,8 +108,11 @@ li:nth-child(odd) {
 }
 
 .task_description {
-  width: 30rem;
+  width: 25rem;
   margin-right: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .task_due_date {
