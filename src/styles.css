@@ -123,6 +123,16 @@ li:nth-child(odd) {
   width: 12rem;
 }
 
+.task_edit{
+  width: 1rem;
+  height: auto;  
+}
+
+.task_delete{
+  width: 1rem;
+  height: auto;  
+}
+
 #nav_buttons{
   text-align: left;
   margin-left: 5rem;
