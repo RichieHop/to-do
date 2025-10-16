@@ -1,5 +1,6 @@
 import {format} from "date-fns"
 
+import addIcon from "./images/add.png";
 import editIcon from "./images/edit.png";
 import deleteIcon from "./images/delete.png";
 
@@ -90,13 +91,23 @@ export function loadProjects() {
     projectsUL.setAttribute("id", "projectsList");
     projects.appendChild(projectsUL);
     
-    let list = document.getElementById("projectsList");
-
+    const projectsHeader = document.createElement('div');
+    projectsHeader.setAttribute("id", "projectsHeader");
+    projectsUL.appendChild(projectsHeader);
+     
     // Create the project header
     let projectTitle = document.createElement('div');
     projectTitle.classList.add('project_title');
     projectTitle.textContent = "Projects";
-    list.appendChild(projectTitle);
+    projectsHeader.appendChild(projectTitle);
+
+    // Add the plus icon.
+    let projectNewIcon = document.createElement('img');
+    projectNewIcon.classList.add('project_new');
+    projectNewIcon.src = addIcon;
+    projectsHeader.appendChild(projectNewIcon);
+
+    let list = document.getElementById("projectsList");
 
     for (let i = 0; i < projectsArray.length; i++) {
         let li = document.createElement('li');
@@ -154,18 +165,19 @@ export function loadTasks() {
     taskCompletedDate.textContent = "Completed Date";
     taskBody.appendChild(taskCompletedDate);
 
-
     // Create dummy edit header
     let taskEdit = document.createElement('div');
     taskEdit.classList.add('task_edit');
     taskEdit.textContent = " ";
     taskBody.appendChild(taskEdit);
 
-    // Create dummy delete header
-    let taskDelete = document.createElement('div');
-    taskDelete.classList.add('task_delete');
-    taskDelete.textContent = " ";
-    taskBody.appendChild(taskDelete);
+    // Add the plus icon.
+    let taskNewIcon = document.createElement('img');
+    taskNewIcon.classList.add('task_new');
+    taskNewIcon.src = addIcon;
+    taskBody.appendChild(taskNewIcon);
+
+
 
     tasksContainer.appendChild(taskBody);
 
