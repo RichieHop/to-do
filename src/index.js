@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { loadProjects, loadTasks, createProject, deleteProject } from './projects.js';
+import { loadProjects, loadTasks } from './projects.js';
 
 /* Storing user's device details in a variable*/
 let details = navigator.userAgent;
@@ -22,9 +22,3 @@ if (isMobileDevice) {
 // Always load projects and tasks'
 loadProjects();
 loadTasks();
-
-// Other pages. 
-// document.getElementById('homeButton').addEventListener('click', loadHome);
-// document.getElementById('projectsButton').addEventListener('click', loadProjects);
-// document.getElementById('tasksButton').addEventListener('click', loadTasks);
-

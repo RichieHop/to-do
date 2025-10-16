@@ -4,10 +4,16 @@ import addIcon from "./images/add.png";
 import editIcon from "./images/edit.png";
 import deleteIcon from "./images/delete.png";
 
-// set to the "default" project on load
-let currentProject = "Default";
+let projectsArray = [];
 
-const projectsArray = [
+if (localStorage.getItem('projects')) {
+    projectsArray = JSON.parse(localStorage.getItem('projects'));
+    // Sort the array by project name
+    projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
+}
+
+if (!localStorage.getItem('projects')) {
+    projectsArray = [
     {Name: 'Default', ID: 1, Tasks: [{Task_ID: 1, Task_Name: "Test", Description: "Sample task for the default project", Priority: "Low",
                                       Due_Date: "2025-10-30", Completed_Date: "", Created_Date: "2025-10-01"}]},
     {Name: 'Work', ID: 2, Tasks: [{Task_ID: 1, Task_Name: "Test", Description: "Sample task for the work project", Priority: "Low",
@@ -16,72 +22,17 @@ const projectsArray = [
                                       Due_Date: "2025-10-31", Completed_Date: "", Created_Date: "2025-10-01"},
                                  {Task_ID: 2, Task_Name: "Dash-Cam", Description: "Check dash-cams with main dealer", Priority: "Medium",
                                       Due_Date: "2025-11-30", Completed_Date: "", Created_Date: "2025-10-01"}
-                                ]}
-]
+                                ]}    
+    ]
 
-// Sort the array by project name
-projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
-
-if (!localStorage.getItem('projects')) {
+    // Sort the array by project name
+    projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
+    // Create 3 new tasks on the Cars project
+    projectsManager.createTask(projectsArray, 0, "9", "Push Test", "Sample pushed task", "Low", "2025-10-30", "", "2025-10-07");
     localStorage.setItem('projects', JSON.stringify(projectsArray));
 }
 
-// Projects data manager 
-const projectsManager = (function () {
-
-    // set to the "default" project on load
-    let currentProject = "Default";
-
-    // Change the current project
-    function changeCurrentProject(project) {
-        currentProject = project;
-    }
-
-    // Check for clicks on the projects list
-    function changeFolder(e, project) {
-        // Set the current folder to the li item that was clicked
-        changeCurrentProject(e.target.textContent);
-        loadTasks();
-    }
-
-    // Get currentProject
-    function getCurrentProject() {
-        return currentProject;
-    }
-
-    // Create a new task for the current project
-    function createTask(projectIndex, ID, Name, Description, Priority, Due_Date, Completed_Date, Created_Date) {
-        
-        projectsArray[projectIndex].Tasks.push({Task_ID: ID, Task_Name: Name, Description: Description, Priority: Priority,
-                                      Due_Date: Due_Date, Completed_Date: Completed_Date, Created_Date: Created_Date});
-        // Add 3 additional tasks manually (don't use passed parameters)
-        projectsArray[projectIndex].Tasks.push({Task_ID: 5, Task_Name: "Test 1", Description: "Sample 1", Priority: "Low",
-                                      Due_Date: "2025-10-21", Completed_Date: "", Created_Date: "2025-10-01"});
-        projectsArray[projectIndex].Tasks.push({Task_ID: 4, Task_Name: "Test 2", Description: "Sample 2", Priority: "Low",
-                                      Due_Date: "2025-10-22", Completed_Date: "", Created_Date: "2025-10-01"});
-        projectsArray[projectIndex].Tasks.push({Task_ID: 5, Task_Name: "Test 3", Description: "Sample 3", Priority: "Low",
-                                      Due_Date: "2025-10-23", Completed_Date: "", Created_Date: "2025-10-01"});
-
-        localStorage.setItem('projects', JSON.stringify(projectsArray));
-
-        return
-    }
-
-    return {
-        changeCurrentProject,
-        changeFolder,
-        getCurrentProject,
-        createTask
-        // addNewToDo,
-        // editToDo,
-        // deleteToDo,
-        // addNewProject,
-        // checkEmptyProject
-    }
-})();
-
-// Create 3 new tasks on the Cars project
-projectsManager.createTask(0, "9", "Push Test", "Sample pushed task", "Low", "2025-10-30", "", "2025-10-07");
+import { projectsManager } from './projects_admin.js';
 
 export function loadProjects() {
     const projects = document.querySelector('#projects');
@@ -124,7 +75,8 @@ export function loadProjects() {
             lists.forEach((li) => li.style.color = "black");
             // Set selected font colour to blue.
             li.style.color = "blue";
-            projectsManager.changeFolder(e, projectsArray[i].Name);
+            projectsManager.changeProject(e, projectsArray[i].Name);
+            loadTasks();
         })
     }
 }
@@ -216,7 +168,6 @@ export function loadTasks() {
                 taskDueDate.classList.add('task_due_date');
 
                 let dateObject = new Date(projectsArray[i].Tasks[tasksIndex].Due_Date);
-                console.log(projectsArray[i].Tasks[tasksIndex].Due_Date);
                 let dateYear = format(dateObject, 'yyyy');
                 let dateMonth = format(dateObject, 'MM');
                 let dateDay = format(dateObject, 'dd');
