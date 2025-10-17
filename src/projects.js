@@ -35,50 +35,79 @@ if (!localStorage.getItem('projects')) {
 import { projectsManager } from './projects_admin.js';
 
 export function loadProjects() {
-    const projects = document.querySelector('#projects');
-    projects.innerHTML = '';
+    const projectsListContainer = document.querySelector('#projectsListContainer');
+    projectsListContainer.innerHTML = '';
 
-    const projectsUL = document.createElement('ul');
-    projectsUL.setAttribute("id", "projectsList");
-    projects.appendChild(projectsUL);
-    
-    const projectsHeader = document.createElement('div');
-    projectsHeader.setAttribute("id", "projectsHeader");
-    projectsUL.appendChild(projectsHeader);
-     
-    // Create the project header
+    // Create project headers
+    let projectBody = document.createElement('div');
+    projectBody.classList.add('project');
+    // Set the data index equal to 0, and data project equal to "Headers"
+    projectBody.setAttribute('data-index', 0);
+    projectBody.setAttribute('data-project', `Headers`)
+        
+    // Create the project title header
     let projectTitle = document.createElement('div');
     projectTitle.classList.add('project_title');
-    projectTitle.textContent = "Projects";
-    projectsHeader.appendChild(projectTitle);
+    projectTitle.textContent = "Project";
+    projectTitle.style.fontWeight = "900";
+    projectBody.appendChild(projectTitle);
 
     // Add the plus icon.
     let projectNewIcon = document.createElement('img');
     projectNewIcon.classList.add('project_new');
     projectNewIcon.src = addIcon;
-    projectsHeader.appendChild(projectNewIcon);
+    projectBody.appendChild(projectNewIcon);
 
-    let list = document.getElementById("projectsList");
+    projectsListContainer.appendChild(projectBody);
+
+    let list = document.getElementById("projectsListContainer");
 
     for (let i = 0; i < projectsArray.length; i++) {
-        let li = document.createElement('li');
-        li.innerText = projectsArray[i].Name;
-        list.appendChild(li);
+        // Create the main body of the project
+        projectBody = document.createElement('div');
+        projectBody.classList.add('project');
+        // Set the data index equal to the array counter, and data project equal to the project name
+        projectBody.setAttribute('data-index', i);
+        projectBody.setAttribute('data-project', `${projectsArray[i].Name}`)
+                
+        // Create the project title
+        projectTitle = document.createElement('div');
+        projectTitle.classList.add('project_title');
+        projectTitle.textContent = projectsArray[i].Name;
+        projectBody.appendChild(projectTitle);
 
         // Set default folder font colour to blue.
         if (projectsArray[i].Name === "Default") {
-            li.style.color = "blue";
+            projectTitle.style.color = "blue";
         }
 
-        li.addEventListener("click", e => {
-            let lists = document.querySelectorAll("li");
-            lists.forEach((li) => li.style.color = "black");
-            // Set selected font colour to blue.
-            li.style.color = "blue";
+        projectTitle.addEventListener("click", e => {
+            let projects = document.querySelectorAll(".project_title");
+            // Set font colour to black for all projects
+            for (let i = 0; i < projects.length; i++) {projects[i].style.color = "black";}
+            // Set font colour to blue for selected project.
+            e.target.style.color = "blue";  
             projectsManager.changeProject(e, projectsArray[i].Name);
             loadTasks();
         })
+    
+        // Add the edit icon.
+        let projectEditIcon = document.createElement('img');
+        projectEditIcon.classList.add('project_edit');
+        projectEditIcon.src = editIcon;
+        projectBody.appendChild(projectEditIcon);
+
+        // Add the delete icon.
+        let projectDeleteIcon = document.createElement('img');
+        projectDeleteIcon.classList.add('project_delete');
+        projectDeleteIcon.src = deleteIcon;
+        projectBody.appendChild(projectDeleteIcon);
+
+        projectsListContainer.appendChild(projectBody);
+                
+
     }
+
 }
 
 export function loadTasks() {

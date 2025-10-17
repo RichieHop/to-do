@@ -25,44 +25,72 @@ header span{
     display:inline-flex;
 }
 
-#projectsList {
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
+.projectsListContainer {
   height: 20rem;
   width: 30rem;
   margin-left: 3rem;
   margin-top: 3rem;
   overflow-y: auto;
   overflow-x: hidden;
-  overflow-wrap: break-word;
+  text-wrap: nowrap;
   font-size: 1.5rem;
 }
 
+.project {
+  display: flex;
+  align-items: left;
+  width: 30rem;
+}
+
 .project_title{
-  font-weight: 900;
-  background-color: rgb(240, 181, 110);
+  /* font-weight: 900; */
   padding: 0.25rem;
   display: inline-block;
-  width: 27.3rem;
+  width: 30rem;
+  font-size: 1.5rem;
+}
+
+.project_title:hover{
+  font-weight: 900;
+}
+
+.project_edit{
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.project_delete{
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.project_new{
+  width: 2.2rem;
+  height: auto;
+  float: right;
+  background-color: rgb(240, 181, 110);
 }
 
 li{
   padding: 0.25rem;
 }
 
-li:hover{
+/* li:hover{
   font-weight: 900;
-}
+} */
 
 /* li:not(:last-child) {
     margin-bottom: 5px;
 } */
 
 /* Zebra striped projects list */
-li:nth-child(odd) {
+.project:nth-child(odd) {
   background-color: rgb(240, 181, 110);
 }
+
+/* .project:nth-child(even) {
+  background-color: white;
+} */
 
 .tasksContainer {
   height: 20rem;
@@ -141,34 +169,3 @@ li:nth-child(odd) {
   float: left;
   background-color: rgb(240, 181, 110);
 }
-
-.project_new{
-  width: 2.2rem;
-  height: auto;
-  float: right;
-  background-color: rgb(240, 181, 110);
-}
-
-/* #nav_buttons{
-  text-align: left;
-  margin-left: 5rem;
-  border: solid black;
-  width: 18rem;
-} */
-
-/* button{
-  margin-left: 2rem;
-} */
-
-/* #newProjectButton,#newTaskButton{
-  font-weight: 300;
-  font-size: 1.5rem;
-  border: none;
-  background-color: transparent;
-  text-align: left;
-  width: 16rem;
-} */
-
-/* #newProjectButton:hover,#newTaskButton:hover{
-  font-weight: 900;
-} */
