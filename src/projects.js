@@ -105,21 +105,38 @@ export function loadProjects() {
             projectBody.appendChild(projectDeleteIcon);
 
             projectDeleteIcon.addEventListener("click", e => {
-                projectsManager.deleteCurrentProject(projectsArray, projectsArray[i].ID);
-                projectsArray = JSON.parse(localStorage.getItem('projects'));
-                loadProjects();
+                // Get the modal
+                var modal = document.getElementById("deleteProjectModal");
+                // Get the modal header
+                var deleteProjectHeader = document.getElementById("deleteProjectHeader");
+                deleteProjectHeader.textContent = `${projectsArray[i].Name}`;
+                // Get the Cancel and Delete buttons.
+                var cancelButton = document.getElementsByClassName("cancelProject")[0];
+                var deleteButton = document.getElementsByClassName("deleteProject")[0];
+                // Open the modal
+                modal.style.display = "block";
+                // When the user clicks on Cancel, close the modal
+                cancelButton.onclick = function() {
+                    modal.style.display = "none";
+                    return;
+                }
+                // When the user clicks on Delete, delete the project
+                deleteButton.onclick = function() {
+                    projectsManager.deleteCurrentProject(projectsArray, projectsArray[i].ID);
+                    projectsArray = JSON.parse(localStorage.getItem('projects'));
+                    loadProjects();
+                    modal.style.display = "none";
+                }
             })
         }
     
         projectsListContainer.appendChild(projectBody);
-                
 
     }
 
 }
 
 export function loadTasks() {
-    // const projectsArray = localStorage.getItem('projects');
     const tasksContainer = document.querySelector('#tasksContainer');
     tasksContainer.innerHTML = '';
 
@@ -241,10 +258,30 @@ export function loadTasks() {
 
                 let projectID = projectsArray[i].ID;
                 let taskID = projectsArray[i].Tasks[tasksIndex].Task_ID;
+                let taskName = projectsArray[i].Tasks[tasksIndex].Task_Name;
 
                 taskDeleteIcon.addEventListener("click", e => {
-                    projectsManager.deleteCurrentTask(projectsArray, projectID, taskID);
-                    loadTasks();
+                    // Get the modal
+                    var modal = document.getElementById("deleteTaskModal");
+                    // Get the modal header
+                    var deleteProjectHeader = document.getElementById("deleteTaskHeader");
+                    deleteProjectHeader.textContent = `${taskName}`;
+                    // Get the Cancel and Delete buttons.
+                    var cancelButton = document.getElementsByClassName("cancelTask")[0];
+                    var deleteButton = document.getElementsByClassName("deleteTask")[0];
+                    // Open the modal
+                    modal.style.display = "block";
+                    // When the user clicks on Cancel, close the modal
+                    cancelButton.onclick = function() {
+                        modal.style.display = "none";
+                        return;
+                    }
+                    // When the user clicks on Delete, delete the task
+                    deleteButton.onclick = function() {
+                        projectsManager.deleteCurrentTask(projectsArray, projectID, taskID);
+                        loadTasks();
+                        modal.style.display = "none";
+                    }
                 })
 
                 tasksContainer.appendChild(taskBody);

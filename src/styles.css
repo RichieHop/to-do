@@ -15,6 +15,8 @@ html{
 body {
   background-color: bisque;
   margin-top: 0px;
+  height: 95vh;
+  width: 100vw;
 }
 
 header{
@@ -176,3 +178,61 @@ header span{
   background-color: rgb(218, 132, 28);
 }
 
+/* Modal delete (background) */
+.modalDelete {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Header */
+#deleteProjectHeader,
+#deleteTaskHeader {
+  /* padding: 2rem; */
+  background-color: rgba(255, 0, 0, 0.541);
+  color: white;
+  /* margin: 15% auto; 15% from the top and centered */
+  /* width: 50%; Could be more or less, depending on screen size */
+}
+
+/* Modal Content */
+.modalDeleteContent {
+  background-color: #fefefe;
+  margin: 15% auto; 
+  padding: 2rem;
+  border: 1px solid #888;
+  width: 20%; /* Could be more or less, depending on screen size */
+}
+
+/* Cancel and Delete buttons */
+.cancelProject,
+.deleteProject,
+.cancelTask,
+.deleteTask {
+  color: #aaa;
+  float: right;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 10%;
+  margin-left: 1rem;
+}
+
+.cancelProject:focus,
+.cancelProject:hover,
+.deleteProject:focus,
+.deleteProject:hover,
+.cancelTask:focus,
+.cancelTask:hover,
+.deleteTask:focus,
+.deleteTask:hover {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
