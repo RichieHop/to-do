@@ -189,26 +189,26 @@ header span{
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgba(0,0,0,0.4); /*Black w/ opacity */
 }
 
 /* Modal Header */
 #deleteProjectHeader,
 #deleteTaskHeader {
-  /* padding: 2rem; */
-  background-color: rgba(255, 0, 0, 0.541);
-  color: white;
-  /* margin: 15% auto; 15% from the top and centered */
-  /* width: 50%; Could be more or less, depending on screen size */
+  background-color: rgb(240, 181, 110);
+  /* color: white; */
+  font-size: 2rem;
+  margin: 0;
+  padding: 0.25rem;
 }
 
 /* Modal Content */
 .modalDeleteContent {
-  background-color: #fefefe;
-  margin: 15% auto; 
+  background-color: bisque;
+  margin: 5% auto; 
   padding: 2rem;
-  border: 1px solid #888;
-  width: 20%; /* Could be more or less, depending on screen size */
+  border: 0.1rem solid rgb(240, 181, 110);
+  width: 20%;
 }
 
 /* Cancel and Delete buttons */
@@ -217,6 +217,7 @@ header span{
 .cancelTask,
 .deleteTask {
   color: #aaa;
+  background-color: bisque;
   float: right;
   font-size: 1rem;
   font-weight: bold;
