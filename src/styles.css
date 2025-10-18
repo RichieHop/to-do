@@ -55,13 +55,13 @@ header span{
 }
 
 .project_edit{
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.7rem;
+  height: 1.7rem;
 }
 
 .project_delete{
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.7rem;
+  height: 1.7rem;
 }
 
 .project_new{
@@ -71,17 +71,9 @@ header span{
   background-color: rgb(240, 181, 110);
 }
 
-li{
-  padding: 0.25rem;
+.project_edit:hover,.project_delete:hover,.project_new:hover{
+  background-color: rgb(218, 132, 28);
 }
-
-/* li:hover{
-  font-weight: 900;
-} */
-
-/* li:not(:last-child) {
-    margin-bottom: 5px;
-} */
 
 /* Zebra striped projects list */
 .project:nth-child(odd) {
@@ -169,3 +161,8 @@ li{
   float: left;
   background-color: rgb(240, 181, 110);
 }
+
+.task_edit:hover,.task_delete:hover,.task_new:hover{
+  background-color: rgb(218, 132, 28);
+}
+

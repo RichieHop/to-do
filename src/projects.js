@@ -28,7 +28,7 @@ if (!localStorage.getItem('projects')) {
     // Sort the array by project name
     projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
     // Create 3 new tasks on the Cars project
-    projectsManager.createTask(projectsArray, 0, "9", "Push Test", "Sample pushed task", "Low", "2025-10-30", "", "2025-10-07");
+    projectsManager.createTask(projectsArray, 0, 3, "Push Test", "Sample pushed task", "Low", "2025-10-30", "", "2025-10-07");
     localStorage.setItem('projects', JSON.stringify(projectsArray));
 }
 
@@ -91,18 +91,26 @@ export function loadProjects() {
             loadTasks();
         })
     
-        // Add the edit icon.
-        let projectEditIcon = document.createElement('img');
-        projectEditIcon.classList.add('project_edit');
-        projectEditIcon.src = editIcon;
-        projectBody.appendChild(projectEditIcon);
+        if (projectsArray[i].Name != "Default") {
+            // Add the edit icon.
+            let projectEditIcon = document.createElement('img');
+            projectEditIcon.classList.add('project_edit');
+            projectEditIcon.src = editIcon;
+            projectBody.appendChild(projectEditIcon);
 
-        // Add the delete icon.
-        let projectDeleteIcon = document.createElement('img');
-        projectDeleteIcon.classList.add('project_delete');
-        projectDeleteIcon.src = deleteIcon;
-        projectBody.appendChild(projectDeleteIcon);
+            // Add the delete icon.
+            let projectDeleteIcon = document.createElement('img');
+            projectDeleteIcon.classList.add('project_delete');
+            projectDeleteIcon.src = deleteIcon;
+            projectBody.appendChild(projectDeleteIcon);
 
+            projectDeleteIcon.addEventListener("click", e => {
+                projectsManager.deleteCurrentProject(projectsArray, projectsArray[i].ID);
+                projectsArray = JSON.parse(localStorage.getItem('projects'));
+                loadProjects();
+            })
+        }
+    
         projectsListContainer.appendChild(projectBody);
                 
 
@@ -157,8 +165,6 @@ export function loadTasks() {
     taskNewIcon.classList.add('task_new');
     taskNewIcon.src = addIcon;
     taskBody.appendChild(taskNewIcon);
-
-
 
     tasksContainer.appendChild(taskBody);
 
@@ -232,6 +238,14 @@ export function loadTasks() {
                 taskDeleteIcon.classList.add('task_delete');
                 taskDeleteIcon.src = deleteIcon;
                 taskBody.appendChild(taskDeleteIcon);
+
+                let projectID = projectsArray[i].ID;
+                let taskID = projectsArray[i].Tasks[tasksIndex].Task_ID;
+
+                taskDeleteIcon.addEventListener("click", e => {
+                    projectsManager.deleteCurrentTask(projectsArray, projectID, taskID);
+                    loadTasks();
+                })
 
                 tasksContainer.appendChild(taskBody);
                 
