@@ -235,6 +235,9 @@ export function loadTasks() {
         // Only select the current project if it has tasks
         if (projectsArray[i].Tasks[tasksIndex] != undefined && projectsArray[i].Name === projectsManager.getCurrentProject()) {
 
+            // Sort the tasks by due date ascending
+            projectsArray[i].Tasks.sort((a, b) => new Date(a.Due_Date) - new Date(b.Due_Date));
+
             // Loop through all tasks for the current project
             for (var x = 0; x < projectsArray[i].Tasks.length; x++)  {
                 // Create the main body of the task
