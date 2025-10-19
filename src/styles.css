@@ -115,7 +115,11 @@ header span{
 }
 
 .project_edit:hover,.project_delete:hover,.project_new:hover{
-  background-color: rgb(218, 132, 28);
+  /* background-color: rgb(218, 132, 28); */
+  transform: scale(1.1);
+  transform-origin: 50% 50%;
+  box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.3);
+  transition: all .2s ease-out;
 }
 
 /* Zebra striped projects list */
@@ -238,7 +242,11 @@ header span{
 }
 
 .task_edit:hover,.task_delete:hover,.task_new:hover{
-  background-color: rgb(218, 132, 28);
+  /* background-color: rgb(218, 132, 28); */
+  transform: scale(1.1);
+  transform-origin: 50% 50%;
+  box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.3);
+  transition: all .2s ease-out;
 }
 
 /* Modal delete (background) */
