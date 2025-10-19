@@ -54,6 +54,13 @@ header span{
   width: 30rem;
 }
 
+.project:first-child {
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  background-color: rgb(240, 181, 110);
+}
+
 .project_title{
   /* font-weight: 900; */
   padding: 0.25rem;
@@ -88,9 +95,9 @@ header span{
 }
 
 /* Zebra striped projects list */
-.project:nth-child(odd) {
+/* .project:nth-child(odd) {
   background-color: rgb(240, 181, 110);
-}
+} */
 
 /* .project:nth-child(even) {
   background-color: white;
@@ -120,11 +127,28 @@ header span{
   font-weight: 600;
   position: sticky;
   top: 0;
+  background-color: rgb(240, 181, 110);
 }
 
 /* Zebra striped tasks list */
-.task:nth-child(odd) {
+/* .task:nth-child(odd) {
   background-color: rgb(240, 181, 110);
+} */
+
+.task_priority{
+  border-left: 0.35rem solid green;
+}
+
+.priority-Low {
+  border-left: 0.35rem solid green;
+}
+
+.priority-Medium {
+  border-left: 0.35rem solid orange;
+}
+
+.priority-High {
+  border-left: 0.35rem solid red;
 }
 
 .task_title {
@@ -135,9 +159,9 @@ header span{
   text-overflow: ellipsis;
 }
 
-.task_title:hover{
+/* .task_title:hover{
   font-weight: 900;
-}
+} */
 
 .task_description {
   width: 25rem;

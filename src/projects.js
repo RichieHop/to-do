@@ -18,7 +18,7 @@ if (!localStorage.getItem('projects')) {
                                       Due_Date: "2025-10-30", Completed_Date: "", Created_Date: "2025-10-01"}]},
     {Name: 'Work', ID: 2, Tasks: [{Task_ID: 1, Task_Name: "Test", Description: "Sample task for the work project", Priority: "Low",
                                       Due_Date: "2025-11-30", Completed_Date: "", Created_Date: "2025-10-01"}]},
-    {Name: 'Car', ID: 3, Tasks: [{Task_ID: 1, Task_Name: "Service", Description: "Book service for December", Priority: "Low",
+    {Name: 'Car', ID: 3, Tasks: [{Task_ID: 1, Task_Name: "Service", Description: "Book service for December", Priority: "High",
                                       Due_Date: "2025-10-31", Completed_Date: "", Created_Date: "2025-10-01"},
                                  {Task_ID: 2, Task_Name: "Dash-Cam", Description: "Check dash-cams with main dealer", Priority: "Medium",
                                       Due_Date: "2025-11-30", Completed_Date: "", Created_Date: "2025-10-01"}
@@ -147,6 +147,12 @@ export function loadTasks() {
     taskBody.setAttribute('data-index', 0);
     taskBody.setAttribute('data-project', `Headers`)
         
+    // Create dummy priority header
+    let taskPriority = document.createElement('div');
+    taskPriority.classList.add('task_priority');
+    // taskPriority.textContent = "";
+    taskBody.appendChild(taskPriority);
+
     // Create the task title header
     let taskTitle = document.createElement('div');
     taskTitle.classList.add('task_title');
@@ -198,7 +204,7 @@ export function loadTasks() {
                 // Create the main body of the task
                 taskBody = document.createElement('div');
                 taskBody.classList.add('task');
-                taskBody.classList.add(`priority-${projectsArray[i].Priority}`);
+                taskBody.classList.add(`priority-${projectsArray[i].Tasks[tasksIndex].Priority}`);
                 // Set the data index equal to the array counter, and data project equal to the project name
                 taskBody.setAttribute('data-index', i);
                 taskBody.setAttribute('data-project', `${projectsArray[i].Tasks[tasksIndex].Task_Name}`)
