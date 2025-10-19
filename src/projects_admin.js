@@ -24,7 +24,7 @@ export const projectsManager = (function () {
         projectsArray[projectIndex].Tasks.push({Task_ID: 4, Task_Name: "Test 1", Description: "Sample 1", Priority: "Low",
                                       Due_Date: "2025-10-21", Completed_Date: "", Created_Date: "2025-10-01"});
         projectsArray[projectIndex].Tasks.push({Task_ID: 5, Task_Name: "Test 2", Description: "Sample 2", Priority: "High",
-                                      Due_Date: "2025-10-22", Completed_Date: "", Created_Date: "2025-10-01"});
+                                      Due_Date: "2025-10-22", Completed_Date: "2025-10-19", Created_Date: "2025-10-01"});
         projectsArray[projectIndex].Tasks.push({Task_ID: 6, Task_Name: "Test 3", Description: "Sample 3", Priority: "Low",
                                       Due_Date: "2025-10-23", Completed_Date: "", Created_Date: "2025-10-01"});
 

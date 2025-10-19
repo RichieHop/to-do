@@ -70,6 +70,18 @@ export function loadProjects() {
         projectBody.setAttribute('data-index', i);
         projectBody.setAttribute('data-project', `${projectsArray[i].Name}`)
                 
+        // Create the tasks count
+        let tasksCounter = 0;
+        projectsArray[i].Tasks.forEach(task => {
+            if(!task.Completed_Date) {
+                tasksCounter++
+            }
+        })
+        let tasksCount = document.createElement('div');
+        tasksCount.classList.add('tasks_count');
+        tasksCount.textContent = `${tasksCounter}`;
+        projectBody.appendChild(tasksCount);
+             
         // Create the project title
         projectTitle = document.createElement('div');
         projectTitle.classList.add('project_title');
@@ -238,15 +250,16 @@ export function loadTasks() {
                 taskCompletedDate = document.createElement('div');
                 taskCompletedDate.classList.add('task_completed_date');
 
-                dateObject = new Date(projectsArray[i].Tasks[tasksIndex].Completed_Date);
+                // dateObject = new Date(projectsArray[i].Tasks[tasksIndex].Completed_Date);
                 taskCompletedDate.textContent = null;
-                if (!dateObject === null) {
-                    dateObject = new Date(tasksArray[i].Completed_Date);
+                if (projectsArray[i].Tasks[tasksIndex].Completed_Date !== "") {
+                    dateObject = new Date(projectsArray[i].Tasks[tasksIndex].Completed_Date);
                     dateYear = format(dateObject, 'yyyy');
                     dateMonth = format(dateObject, 'MM');
                     dateDay = format(dateObject, 'dd');
                     dateDMY = `${dateDay}/${dateMonth}/${dateYear}`;
                     taskCompletedDate.textContent = dateDMY;
+                    taskBody.classList.add('completed');
                 }
                 taskBody.appendChild(taskCompletedDate);
 
@@ -285,6 +298,7 @@ export function loadTasks() {
                     // When the user clicks on Delete, delete the task
                     deleteButton.onclick = function() {
                         projectsManager.deleteCurrentTask(projectsArray, projectID, taskID);
+                        loadProjects();
                         loadTasks();
                         modal.style.display = "none";
                     }
@@ -294,6 +308,7 @@ export function loadTasks() {
                 
                 tasksIndex++;
             }
+        
         }
 
     }
