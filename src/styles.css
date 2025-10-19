@@ -96,6 +96,16 @@ header span{
   height: 1.7rem;
 }
 
+.project_edit_dummy{
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+.project_delete_dummy{
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
 .project_new{
   width: 2rem;
   height: 2rem;

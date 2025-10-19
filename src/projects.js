@@ -1,8 +1,9 @@
 import {format} from "date-fns"
 
 import addIcon from "./images/add.png";
-import editIcon from "./images/edit.png";
+import blankIcon from "./images/blank.png";
 import deleteIcon from "./images/delete.png";
+import editIcon from "./images/edit.png";
 
 let projectsArray = [];
 
@@ -140,6 +141,18 @@ export function loadProjects() {
                     modal.style.display = "none";
                 }
             })
+        } else {
+            // Add dummy edit icon.
+            let projectEditIcon = document.createElement('img');
+            projectEditIcon.classList.add('project_edit_dummy');
+            projectEditIcon.src = blankIcon;
+            projectBody.appendChild(projectEditIcon);
+
+            // Add dummy delete icon.
+            let projectDeleteIcon = document.createElement('img');
+            projectDeleteIcon.classList.add('project_delete_dummy');
+            projectDeleteIcon.src = blankIcon;
+            projectBody.appendChild(projectDeleteIcon);
         }
     
         projectsListContainer.appendChild(projectBody);
