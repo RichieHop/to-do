@@ -264,7 +264,7 @@ export function loadTasks() {
                 taskDueDate = document.createElement('div');
                 taskDueDate.classList.add('task_due_date');
 
-                let dateObject = new Date(projectsArray[i].Tasks[tasksIndex].Due_Date);
+                let dateObject = new Date(projectsArray[i].Tasks[tasksIndex].Due_Date); 
                 let dateYear = format(dateObject, 'yyyy');
                 let dateMonth = format(dateObject, 'MM');
                 let dateDay = format(dateObject, 'dd');
