@@ -145,15 +145,20 @@ header span{
   height: 1rem;
   padding: 0.5rem;
   margin-left: 5rem;
+  margin-top: 0.5rem;
+  background-color: rgb(250, 218, 180);
 }
 
 .task:hover {
-  font-weight: 600;
-  background-color: lightgrey;
+  transform: scale(1.003);
+  transform-origin: 50% 50%;
+  box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.2);
+  transition: all .2s ease-out;
 }
 
 .completed {
-  background-color: grey;
+  background-color: rgb(185, 184, 184);
+  color: rgb(116, 114, 114);
 }
 
 .task:first-child {
