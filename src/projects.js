@@ -10,7 +10,8 @@ let projectsArray = [];
 if (localStorage.getItem('projects')) {
     projectsArray = JSON.parse(localStorage.getItem('projects'));
     // Sort the array by project name
-    projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
+    // projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
+    projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
 }
 
 if (!localStorage.getItem('projects')) {
@@ -27,7 +28,8 @@ if (!localStorage.getItem('projects')) {
     ]
 
     // Sort the array by project name
-    projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
+    // projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
+    projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
     // Create 3 new tasks on the Cars project
     projectsManager.createTask(projectsArray, 0, 3, "Push Test", "Sample pushed task", "Low", "2025-10-30", "", "2025-10-07");
     localStorage.setItem('projects', JSON.stringify(projectsArray));
@@ -58,6 +60,15 @@ export function loadProjects() {
     projectNewIcon.classList.add('project_new');
     projectNewIcon.src = addIcon;
     projectBody.appendChild(projectNewIcon);
+    // Add an event listener for the plus icon.
+    projectNewIcon.addEventListener("click", e => {
+        projectsManager.addProject(projectsArray);
+        // Sort the array by project name
+        // projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
+        projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
+        localStorage.setItem('projects', JSON.stringify(projectsArray));
+        loadProjects();
+    })
 
     projectsListContainer.appendChild(projectBody);
 

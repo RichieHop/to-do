@@ -51,6 +51,7 @@ header span{
 .project {
   display: flex;
   align-items: left;
+  margin-top: 0.25rem;
   height: 2.5rem;
   /* width: 30rem; */
 }
@@ -60,6 +61,7 @@ header span{
   position: sticky;
   top: 0;
   background-color: rgb(240, 181, 110);
+  margin-top: 0;
 }
 
 .project_title{
@@ -170,6 +172,7 @@ header span{
   position: sticky;
   top: 0;
   background-color: rgb(240, 181, 110);
+  margin-top: 0;
 }
 
 /* Zebra striped tasks list */

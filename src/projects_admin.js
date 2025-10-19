@@ -35,12 +35,6 @@ export const projectsManager = (function () {
 
     // Delete the current project
     function deleteCurrentProject(projectsArray, projectID) {
-        // const index = projectsArray.findIndex(x => x.Name === project);
-        // Only splice array if item is found.
-        // if (index > -1) {
-        //     projectsArray.splice(index, 1);
-        //     localStorage.setItem('projects2', JSON.stringify(projectsArray));
-        // }
         // Delete the project with the ID matching the one passed in the function parameters.
         projectsArray = projectsArray.filter(a => a.ID != projectID);
         localStorage.setItem('projects', JSON.stringify(projectsArray));
@@ -57,12 +51,27 @@ export const projectsManager = (function () {
         localStorage.setItem('projects', JSON.stringify(projectsArray));
     }
 
+    // Add a project
+    function addProject(projectsArray) {
+        let newProject = prompt("Enter new project name: ");
+        // Check to see if project name already exists
+        let duplicate = "";
+        duplicate = projectsArray.filter((project) => project.Name.toUpperCase() === newProject.toUpperCase());
+        // Get highest ID and add 1 to it
+        let maxID = projectsArray.reduce((max, project) => max.ID > project.ID ? max : project).ID + 1;
+        // If the new project name isn't blank and it doesn't already exist, add the new project to projectsArray
+        if (newProject != "" && duplicate == "") {
+            projectsArray.push({Name: newProject, ID: maxID, Tasks: []});
+        }
+    }
+
     return {
         changeProject,
         getCurrentProject,
         createTask,
         deleteCurrentProject,
-        deleteCurrentTask
+        deleteCurrentTask,
+        addProject
     }
 })();
 
