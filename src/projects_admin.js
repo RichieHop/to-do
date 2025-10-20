@@ -1,8 +1,8 @@
 // Projects data manager 
 export const projectsManager = (function () {
 
-    // set to the "default" project on load
-    let currentProject = "Default";
+    // set to the default project on load
+    let currentProject = " Default";
 
     // Check for clicks on the projects list
     function changeProject(e, project) {

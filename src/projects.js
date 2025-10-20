@@ -11,28 +11,45 @@ if (localStorage.getItem('projects')) {
     projectsArray = JSON.parse(localStorage.getItem('projects'));
     // Sort the array by project name
     // projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
-    projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
+    // projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
+    projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
 }
 
 if (!localStorage.getItem('projects')) {
     projectsArray = [
-    {Name: 'Default', ID: 1, Tasks: [{Task_ID: 1, Task_Name: "Test", Description: "Sample task for the default project", Priority: "Low",
-                                      Due_Date: "2025-10-30", Completed_Date: "", Created_Date: "2025-10-01"}]},
-    {Name: 'Work', ID: 2, Tasks: [{Task_ID: 1, Task_Name: "Test", Description: "Sample task for the work project", Priority: "Low",
-                                      Due_Date: "2025-11-30", Completed_Date: "", Created_Date: "2025-10-01"}]},
-    {Name: 'Car', ID: 3, Tasks: [{Task_ID: 1, Task_Name: "Service", Description: "Book service for December", Priority: "High",
-                                      Due_Date: "2025-10-31", Completed_Date: "", Created_Date: "2025-10-01"},
-                                 {Task_ID: 2, Task_Name: "Dash-Cam", Description: "Check dash-cams with main dealer", Priority: "Medium",
-                                      Due_Date: "2025-11-30", Completed_Date: "", Created_Date: "2025-10-01"}
-                                ]}    
+        {Name: ' Default', ID: 1, Tasks: [{Task_ID: 1, Task_Name: "Test", Description: "Sample task for the default project", Priority: "Low",
+                                        Due_Date: "2025-10-30", Completed_Date: "", Created_Date: "2025-10-01"}]},
+        {Name: 'Work', ID: 2, Tasks: [{Task_ID: 1, Task_Name: "Test", Description: "Sample task for the work project", Priority: "Low",
+                                        Due_Date: "2025-11-30", Completed_Date: "", Created_Date: "2025-10-01"}]},
+        {Name: 'Car', ID: 3, Tasks: [{Task_ID: 1, Task_Name: "Service", Description: "Book service for December", Priority: "High",
+                                        Due_Date: "2025-10-31", Completed_Date: "", Created_Date: "2025-10-01"},
+                                    {Task_ID: 2, Task_Name: "Dash-Cam", Description: "Check dash-cams with main dealer", Priority: "Medium",
+                                        Due_Date: "2025-11-30", Completed_Date: "", Created_Date: "2025-10-01"}]},
+        {Name: 'CSS', ID: 4, Tasks: []},
+        {Name: 'JavaScript', ID: 5, Tasks: []},
+        {Name: 'HTML', ID: 6, Tasks: []},
+        {Name: 'Health and Fitness', ID: 7, Tasks: []},
+        {Name: 'Finance', ID: 8, Tasks: []},
+        {Name: 'Food', ID: 9, Tasks: []},
+        {Name: 'GP', ID: 10, Tasks: []},
+        {Name: 'PC', ID: 11, Tasks: []},
+        {Name: 'Test 1', ID: 12, Tasks: []},
+        {Name: 'Test 2', ID: 13, Tasks: []},
+        {Name: 'Test 3', ID: 14, Tasks: []},
+        {Name: 'Test 4', ID: 15, Tasks: []},
+        {Name: 'Test 5', ID: 16, Tasks: []}    
     ]
 
     // Sort the array by project name
     // projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
-    projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
-    // Create 3 new tasks on the Cars project
-    projectsManager.createTask(projectsArray, 0, 3, "Push Test", "Sample pushed task", "Low", "2025-10-30", "", "2025-10-07");
-    localStorage.setItem('projects', JSON.stringify(projectsArray));
+    // projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
+    projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
+    // Add 3 tasks to the "Cars" project.
+    const projectIndex = projectsArray.findIndex(x => x.Name === "Car");
+    if (projectIndex >= 0) {
+        projectsManager.createTask(projectsArray, projectIndex, 3, "Push Test", "Sample pushed task", "Low", "2025-10-30", "", "2025-10-07");
+        localStorage.setItem('projects', JSON.stringify(projectsArray));
+    }
 }
 
 import { projectsManager } from './projects_admin.js';
@@ -65,7 +82,8 @@ export function loadProjects() {
         projectsManager.addProject(projectsArray);
         // Sort the array by project name
         // projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
-        projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
+        // projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
+        projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
         localStorage.setItem('projects', JSON.stringify(projectsArray));
         loadProjects();
     })
@@ -101,7 +119,7 @@ export function loadProjects() {
         projectBody.appendChild(projectTitle);
 
         // Set default folder font colour to blue.
-        if (projectsArray[i].Name === "Default") {
+        if (projectsArray[i].Name === " Default") {
             projectTitle.style.color = "blue";
         }
 
@@ -115,7 +133,7 @@ export function loadProjects() {
             loadTasks();
         })
     
-        if (projectsArray[i].Name != "Default") {
+        if (projectsArray[i].Name != " Default") {
             // Add the edit icon.
             let projectEditIcon = document.createElement('img');
             projectEditIcon.classList.add('project_edit');
