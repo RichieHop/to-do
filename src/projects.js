@@ -5,6 +5,8 @@ import blankIcon from "./images/blank.png";
 import deleteIcon from "./images/delete.png";
 import editIcon from "./images/edit.png";
 
+import PdfHelpFile from "./images/to_do.pdf";
+
 let projectsArray = [];
 
 if (localStorage.getItem('projects')) {
@@ -55,6 +57,15 @@ if (!localStorage.getItem('projects')) {
 import { projectsManager } from './projects_admin.js';
 
 export function loadProjects() {
+    // Add help icon and link to PDF document
+    const formHeader = document.querySelector('#title');
+    let pdfLink = document.createElement('a');
+    pdfLink.href = PdfHelpFile;
+    pdfLink.target="blank";
+    pdfLink.innerHTML = "?";
+    pdfLink.classList.add('pdf');
+    formHeader.appendChild(pdfLink);
+    
     const projectsListContainer = document.querySelector('#projectsListContainer');
     projectsListContainer.innerHTML = '';
 
