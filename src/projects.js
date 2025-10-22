@@ -59,12 +59,16 @@ import { projectsManager } from './projects_admin.js';
 export function loadProjects() {
     // Add help icon and link to PDF document
     const formHeader = document.querySelector('#title');
-    let pdfLink = document.createElement('a');
-    pdfLink.href = PdfHelpFile;
-    pdfLink.target="blank";
-    pdfLink.innerHTML = "?";
-    pdfLink.classList.add('pdf');
-    formHeader.appendChild(pdfLink);
+    let pdfLink = document.querySelector('#pdf');
+    if (pdfLink === null) {
+        pdfLink = document.createElement('a');
+        pdfLink.href = PdfHelpFile;
+        pdfLink.target="blank";
+        pdfLink.innerHTML = "?";
+        pdfLink.classList.add('pdf');
+        pdfLink.setAttribute("id", "pdf");
+        formHeader.appendChild(pdfLink);
+    }
     
     const projectsListContainer = document.querySelector('#projectsListContainer');
     projectsListContainer.innerHTML = '';
@@ -88,6 +92,10 @@ export function loadProjects() {
     projectNewIcon.classList.add('project_new');
     projectNewIcon.src = addIcon;
     projectBody.appendChild(projectNewIcon);
+
+    // _____________________________________________________________________________________________________
+    // Add a project
+    // _____________________________________________________________________________________________________
 
     // Add an event listener for the plus icon.
     projectNewIcon.addEventListener("click", e => {
@@ -219,11 +227,100 @@ export function loadProjects() {
             projectEditIcon.src = editIcon;
             projectBody.appendChild(projectEditIcon);
 
+            // _____________________________________________________________________________________________________
+            // Edit a project
+            // _____________________________________________________________________________________________________
+
+            // Add an event listener for the edit icon.
+            projectEditIcon.addEventListener("click", e => {
+                // Get the modal
+                var modal = document.getElementById("addProjectModal");
+                // Set the modal header
+                var addProjectHeader = document.getElementById("addProjectHeader");
+                addProjectHeader.textContent = "Edit project";
+
+                // Open the modal
+                modal.style.display = "block";
+                
+                // Clear errors, text and set focus on the project name
+                document.getElementById('projectNameID').focus();
+                document.getElementById('projectNameID').value = projectsArray[i].Name;
+                var oldName = projectsArray[i].Name;
+                document.getElementById('addProject').classList.remove('invalid');
+                document.getElementById("projectNameHelp").innerText = "";
+                var addButton = document.getElementsByClassName("addProject")[0];
+                addButton.innerHTML = "Edit";
+
+                // Validate the form
+                const myform = document.getElementById('addProject');
+                myform.noValidate = true;
+                myform.reset;
+
+                // Custom form validation
+                myform.addEventListener('submit', validateForm)
+
+                // Execute once if validation is OK
+                myform.addEventListener('submit', e => {
+                    e.preventDefault();
+                    if (e.submitter.className === "cancelProject") {
+                        myform.close;
+                        modal.style.display = "none";
+                        return true;
+                    } else {      
+                        // Actions after form has passed validation....
+                        projectsManager.editProject(projectsArray, document.getElementById('projectNameID').value, oldName);
+                        // Sort the array by project name
+                        projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
+                        localStorage.setItem('projects', JSON.stringify(projectsArray));
+                        loadProjects();
+                        myform.close;
+                        modal.style.display = "none";
+                        return true;
+                    }
+                }, {once : true});
+
+                // Form validation
+                function validateForm(e) {
+                    if (e.submitter.className != "cancelProject") {
+                        const form = e.target, nameField = document.getElementById("projectNameID").value;
+                        // Reset fields
+                        form.projectName.setCustomValidity('');
+                        form.projectName.parentElement.classList.remove('invalid');
+                        // Check valid project entered
+                        const err = form.projectName.value ? '' : 'error';
+                        form.projectName.setCustomValidity(err);
+                        let duplicate = "";
+                        duplicate = projectsArray.filter((project) => project.Name.toUpperCase() === form.projectName.value.toUpperCase());            
+                        if (duplicate != "") {
+                            form.projectName.setCustomValidity("Project already exists.");
+                        }            
+                        if (!form.checkValidity() || duplicate != "") {
+                            // Form is invalid - cancel submit
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                            // Apply invalid class
+                            if (!form.projectName.checkValidity() || duplicate != "") {
+                                if (form.projectName.value != "") {
+                                    document.getElementById("projectNameHelp").innerText = "Project already exists";
+                                }
+                                form.projectName.parentElement.classList.add('invalid');
+                            }
+                            return false;
+                        }
+                        return true;
+                    }
+                };
+            })
+
             // Add the delete icon.
             let projectDeleteIcon = document.createElement('img');
             projectDeleteIcon.classList.add('project_delete');
             projectDeleteIcon.src = deleteIcon;
             projectBody.appendChild(projectDeleteIcon);
+
+            // _____________________________________________________________________________________________________
+            // Delete a project
+            // _____________________________________________________________________________________________________
 
             projectDeleteIcon.addEventListener("click", e => {
                 // Get the modal
@@ -402,6 +499,10 @@ export function loadTasks() {
                 let projectID = projectsArray[i].ID;
                 let taskID = projectsArray[i].Tasks[tasksIndex].Task_ID;
                 let taskName = projectsArray[i].Tasks[tasksIndex].Task_Name;
+
+                // _____________________________________________________________________________________________________
+                // Delete a task
+                // _____________________________________________________________________________________________________
 
                 taskDeleteIcon.addEventListener("click", e => {
                     // Get the modal

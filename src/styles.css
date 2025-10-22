@@ -26,6 +26,7 @@ header{
   width: 99%;
   background-color: rgb(240, 181, 110);
   padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   align-items: center;
   /* vertical-align: middle; */
 }

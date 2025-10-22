@@ -59,13 +59,23 @@ export const projectsManager = (function () {
         projectsArray.push({Name: newProject, ID: maxID, Tasks: []});
     }
 
+    // Edit a project
+    function editProject(projectsArray, newName, oldName) {
+        const index = projectsArray.findIndex(x => x.Name === oldName);
+        // Only edit the array if the project is found.
+        if (index > -1) {
+            projectsArray[index].Name = newName;
+        }
+    }
+
     return {
         changeProject,
         getCurrentProject,
         createTask,
         deleteCurrentProject,
         deleteCurrentTask,
-        addProject
+        addProject,
+        editProject
     }
 })();
 
