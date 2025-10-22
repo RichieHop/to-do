@@ -77,20 +77,88 @@ export function loadProjects() {
     projectNewIcon.classList.add('project_new');
     projectNewIcon.src = addIcon;
     projectBody.appendChild(projectNewIcon);
+
     // Add an event listener for the plus icon.
     projectNewIcon.addEventListener("click", e => {
-        projectsManager.addProject(projectsArray);
-        // Sort the array by project name
-        // projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
-        // projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
-        projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
-        localStorage.setItem('projects', JSON.stringify(projectsArray));
-        loadProjects();
+        // Get the modal
+        var modal = document.getElementById("addProjectModal");
+        // Set the modal header
+        var addProjectHeader = document.getElementById("addProjectHeader");
+        addProjectHeader.textContent = "Add a new project";
+
+        // Open the modal
+        modal.style.display = "block";
+        
+        // Clear errors, text and set focus on the project name
+        document.getElementById('projectNameID').focus();
+        document.getElementById('projectNameID').value = "";
+        document.getElementById('addProject').classList.remove('invalid');
+        document.getElementById("projectNameHelp").innerText = "";
+
+        // Validate the form
+        const myform = document.getElementById('addProject');
+        myform.noValidate = true;
+        myform.reset;
+
+        // Custom form validation
+        myform.addEventListener('submit', validateForm)
+
+        // Execute once if validation is OK
+        myform.addEventListener('submit', e => {
+            e.preventDefault();
+            if (e.submitter.className === "cancelProject") {
+                myform.close;
+                modal.style.display = "none";
+                return true;
+            } else {      
+                // Actions after form has passed validation.... add the new project to the array
+                projectsManager.addProject(projectsArray, document.getElementById("projectNameID").value);
+                // Sort the array by project name and update local storage
+                projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
+                localStorage.setItem('projects', JSON.stringify(projectsArray));
+                loadProjects();
+                myform.close;
+                modal.style.display = "none";
+                return true;
+            }
+        }, {once : true});
+
+        // Form validation
+        function validateForm(e) {
+            if (e.submitter.className != "cancelProject") {
+                const form = e.target, nameField = document.getElementById("projectNameID").value;
+                // Reset fields
+                form.projectName.setCustomValidity('');
+                form.projectName.parentElement.classList.remove('invalid');
+                // Check valid project entered
+                const err = form.projectName.value ? '' : 'error';
+                form.projectName.setCustomValidity(err);
+                let duplicate = "";
+                duplicate = projectsArray.filter((project) => project.Name.toUpperCase() === form.projectName.value.toUpperCase());            
+                if (duplicate != "") {
+                    form.projectName.setCustomValidity("Project already exists.");
+                }            
+                if (!form.checkValidity() || duplicate != "") {
+                    // Form is invalid - cancel submit
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    // Apply invalid class
+                    if (!form.projectName.checkValidity() || duplicate != "") {
+                        if (form.projectName.value != "") {
+                            document.getElementById("projectNameHelp").innerText = "Project already exists";
+                        }
+                        form.projectName.parentElement.classList.add('invalid');
+                    }
+                    return false;
+                }
+                return true;
+            }
+        };
     })
 
     projectsListContainer.appendChild(projectBody);
 
-    let list = document.getElementById("projectsListContainer");
+    // let list = document.getElementById("projectsListContainer");
 
     for (let i = 0; i < projectsArray.length; i++) {
         // Create the main body of the project

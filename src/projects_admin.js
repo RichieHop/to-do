@@ -52,17 +52,11 @@ export const projectsManager = (function () {
     }
 
     // Add a project
-    function addProject(projectsArray) {
-        let newProject = prompt("Enter new project name: ");
-        // Check to see if project name already exists
-        let duplicate = "";
-        duplicate = projectsArray.filter((project) => project.Name.toUpperCase() === newProject.toUpperCase());
+    function addProject(projectsArray, newProject) {
         // Get highest ID and add 1 to it
         let maxID = projectsArray.reduce((max, project) => max.ID > project.ID ? max : project).ID + 1;
-        // If the new project name isn't blank and it doesn't already exist, add the new project to projectsArray
-        if (newProject != "" && duplicate == "") {
-            projectsArray.push({Name: newProject, ID: maxID, Tasks: []});
-        }
+        // Add the new project to projectsArray
+        projectsArray.push({Name: newProject, ID: maxID, Tasks: []});
     }
 
     return {
