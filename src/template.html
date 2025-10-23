@@ -46,22 +46,52 @@
             </div>
         </div>
         
-        <!-- Add project modal -->
-        <div id="addProjectModal" class="modalAdd">
-            <!-- Add project modal content -->
+        <!-- Add task modal -->
+        <div id="addTaskModal" class="modalAdd">
+            <!-- Add task modal content -->
             <div class="modalAddContent">
-                <p id="addProjectHeader"></p><br>
-                <form id="addProject" action="./" method="post">
-                    <label class="addProjectText" for="projectName">Project Name:</label>
-                    <input class="addProjectText" type="text" id="projectNameID" name="projectName" autofocus><br><br>
-                    <p class="help" id ="projectNameHelp">Please enter a project name.</p>
-                    <!-- <button class="addProject">Add</button> -->
-                    <button class="addProject" type="submit">Add</button>                    
-                    <button class="cancelProject" type="submit">Cancel</button>
+                <p id="addTaskHeader"></p><br>
+                <form id="addTask" action="./" method="post">
+
+                    <div>
+                    <label for="taskName">Task Name:</label>
+                    <input type="text" id="taskNameID" name="taskName" required autofocus><br><br>
+                    <p class="help" id ="taskNameHelp">Please enter a task name.</p>
+                    </div>
+
+                    <div>
+                    <label for="taskDescription">Description:</label>
+                    <input type="text" id="taskDescriptionID" name="taskDescription" required><br><br>                    
+                    <p class="help" id ="taskDescriptionHelp">Please enter a task description.</p>
+                    </div>
+
+                    <label for="taskPriority">Priority:</label>
+                    <!-- <input class="addTaskText" type="text" id="taskPriorityID" name="taskPriority"><br> -->
+                    <select id="taskPriorityID" name="taskPriority">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>              
+
+                    <br><br>
+                    
+                    <div id="taskDueDateDiv">
+                    <label for="taskDueDate">Due Date:</label>
+                    <input type="date" id="taskDueDateID" name="taskDueDate" required><br><br> 
+                    <p class="help" id ="taskDueDateHelp">Please enter a due date.</p>
+                    </div>
+
+                    <div>
+                    <label for="taskCompletedDate">Completed Date:</label>
+                    <input type="date" id="taskCompletedDateID" name="taskCompletedDate"><br><br>
+                    </div>
+
+                    <button class="addTask" type="submit">Add</button>                    
+                    <button class="cancelTask" type="submit">Cancel</button>
                 </form>
             </div>
         </div>
-        
+
         <!-- Delete task modal -->
         <div id="deleteTaskModal" class="modalDelete">
             <!-- Delete task modal content -->

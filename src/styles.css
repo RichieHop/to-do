@@ -288,14 +288,15 @@ header span{
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /*Black w/ opacity */
+  /*background-color: rgb(0,0,0);  Fallback color */
+  /*background-color: rgba(0,0,0,0.4); Black w/ opacity */
 }
 
 /* Modal Header */
 #deleteProjectHeader,
 #deleteTaskHeader,
-#addProjectHeader {
+#addProjectHeader,
+#addTaskHeader {
   background-color: rgb(240, 181, 110);
   /* color: white; */
   font-size: 2rem;
@@ -310,19 +311,34 @@ header span{
   margin: 5% auto; 
   padding: 2rem;
   border: 0.1rem solid rgb(240, 181, 110);
-  width: 20%;
+  width: 25%;
+}
+
+label{
+    display: inline-block;
+    clear: left;
+    width: 25%;
+    text-align: right;
+}
+input {
+  display: inline-block;
 }
 
 .addProjectText{
   font-size: 1rem;
 }
 
+#taskNameID,#taskDescriptionID,#taskPriorityID,#taskDueDateID,#taskCompletedDateID{
+  font-size: 1rem;
+}
+
+#taskDescriptionID {
+  width: 20rem;
+}
+
 /* Cancel, Add and Delete buttons */
-.cancelProject,
-.deleteProject,
-.addProject,
-.cancelTask,
-.deleteTask {
+.cancelProject, .deleteProject, .addProject,
+.cancelTask, .deleteTask, .addTask {
   color: #aaa;
   background-color: bisque;
   float: right;
@@ -334,7 +350,8 @@ header span{
 
 .cancelProject:focus, .cancelProject:hover, .deleteProject:focus, .deleteProject:hover,
 .addProject:focus, .addProject:hover,
-.cancelTask:focus, .cancelTask:hover, .deleteTask:focus, .deleteTask:hover {
+.cancelTask:focus, .cancelTask:hover, .deleteTask:focus, .deleteTask:hover,
+.addTask:focus, .addTask:hover {
   color: black;
   text-decoration: none;
   cursor: pointer;

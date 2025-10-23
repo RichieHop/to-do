@@ -419,6 +419,105 @@ export function loadTasks() {
     taskNewIcon.src = addIcon;
     taskBody.appendChild(taskNewIcon);
 
+    // _____________________________________________________________________________________________________
+    // Add a task
+    // _____________________________________________________________________________________________________
+
+    // Add an event listener for the plus icon.
+    taskNewIcon.addEventListener("click", e => {
+        // Get the modal
+        var modal = document.getElementById("addTaskModal");
+        // Set the modal header
+        var addTaskHeader = document.getElementById("addTaskHeader");
+        addTaskHeader.textContent = "Add a new task";
+
+        // Open the modal
+        modal.style.display = "block";
+        
+        // Clear errors, text and set focus on the project name
+        document.getElementById('taskNameID').focus();
+
+        document.getElementById('taskNameID').value = "";
+        document.getElementById('taskDescriptionID').value = "";
+        document.getElementById('taskPriorityID').value = "Low";
+        document.getElementById('taskDueDateID').value = "";
+        document.getElementById('taskCompletedDateID').value = "";
+
+        document.getElementById("taskDueDateHelp").innerText = "Please enter a due date";
+        document.getElementById("taskDueDateDiv").classList.remove('invalid');
+
+        // Validate the form
+        const myform = document.getElementById('addTask');
+        myform.noValidate = true;
+        myform.reset;
+
+        // Custom form validation
+        myform.addEventListener('submit', validateForm)
+
+        // Execute once if validation is OK
+        myform.addEventListener('submit', e => {
+            e.preventDefault();
+            if (e.submitter.className === "cancelTask") {
+                myform.close;
+                modal.style.display = "none";
+                return true;
+            } else {      
+                // Actions after form has passed validation....
+                let projectID = projectsArray.findIndex(x => x.Name === projectsManager.getCurrentProject());
+                projectsManager.addTask(projectsArray, projectID, myform.taskName.value, myform.taskDescription.value, myform.taskPriority.value, myform.taskDueDate.value, myform.taskCompletedDate.value);
+                // Sort the array by project name
+                projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
+                localStorage.setItem('projects', JSON.stringify(projectsArray));
+                loadProjects();
+                loadTasks();
+                myform.close;
+                modal.style.display = "none";
+                return true;
+            }
+        }, {once : true});
+
+        // Form validation
+        function validateForm(e) {
+            if (e.submitter.className != "cancelTask") {
+                const form = e.target;
+                var field = Array.from(form.elements);
+                // Reset fields
+                field.forEach(i => {
+                    i.setCustomValidity('');
+                    i.parentElement.classList.remove('invalid');
+                });
+
+                // Add extra check for due date prior to today
+                var todaysDate = new Date().setHours(0,0,0,0);
+                var enteredDueDate = new Date(form.taskDueDate.value).setHours(0,0,0,0);
+                var err = "error";
+
+                if (field.name = "taskDueDate" && enteredDueDate < todaysDate) {
+                    document.getElementById("taskDueDateHelp").innerText = "Due date cannot be earlier than today";
+                    document.getElementById("taskDueDateDiv").classList.add('invalid');
+                    form.taskDueDate.setCustomValidity(err);
+                }
+
+                if (!form.checkValidity() || enteredDueDate < todaysDate) {
+                    // Form is invalid - cancel submit
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    // Apply invalid class
+                    field.forEach(i => {
+                        if (!i.checkValidity()) {
+                            // field is invalid - add class
+                            i.parentElement.classList.add('invalid');
+                        }
+                        }
+                    );
+
+                    return false;
+                }
+                return true;
+            }
+        };
+    })
+
     tasksContainer.appendChild(taskBody);
 
     // Display tasks for the selected project

@@ -68,6 +68,15 @@ export const projectsManager = (function () {
         }
     }
 
+    // Add a task
+    function addTask(projectsArray, ProjectID, taskName, taskDescription, taskPriority, taskDueDate, taskCompletedDate) {
+        // Get highest ID and add 1 to it
+        let maxID = projectsArray[ProjectID].Tasks.reduce((max, task) => max.Task_ID > task.Task_ID ? max : task).Task_ID + 1;
+        // Add the new task to projectsArray
+        projectsArray[ProjectID].Tasks.push({Task_ID: maxID, Task_Name: taskName, Description: taskDescription, Priority: taskPriority,
+                                      Due_Date: taskDueDate, Completed_Date: taskCompletedDate, Created_Date: ""});
+    }
+
     return {
         changeProject,
         getCurrentProject,
@@ -75,7 +84,8 @@ export const projectsManager = (function () {
         deleteCurrentProject,
         deleteCurrentTask,
         addProject,
-        editProject
+        editProject,
+        addTask
     }
 })();
 
