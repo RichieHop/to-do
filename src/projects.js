@@ -45,10 +45,10 @@ if (!localStorage.getItem('projects')) {
     // Add 4 tasks to the "Cars" project.
     const projectIndex = projectsArray.findIndex(x => x.Name === "Car");
     if (projectIndex >= 0) {
-        projectsManager.createTask(projectsArray, projectIndex, 3, "Yet Another Test", "Another test description", "Low", "2025-10-30", "", "2025-10-07");
-        projectsManager.createTask(projectsArray, projectIndex, 4, "Test 1", "Sample 1", "Low", "2025-10-21", "", "2025-10-01");
-        projectsManager.createTask(projectsArray, projectIndex, 5, "Test 2", "Sample 2", "High", "2025-10-22", "2025-10-19", "2025-10-01");
-        projectsManager.createTask(projectsArray, projectIndex, 6, "Test 3", "Sample 3", "Low", "2025-10-23", "", "2025-10-01");        
+        projectsManager.createSampleTask(projectsArray, projectIndex, 3, "Yet Another Test", "Another test description", "Low", "2025-10-30", "", "2025-10-07");
+        projectsManager.createSampleTask(projectsArray, projectIndex, 4, "Test 1", "Sample 1", "Low", "2025-10-21", "", "2025-10-01");
+        projectsManager.createSampleTask(projectsArray, projectIndex, 5, "Test 2", "Sample 2", "High", "2025-10-22", "2025-10-19", "2025-10-01");
+        projectsManager.createSampleTask(projectsArray, projectIndex, 6, "Test 3", "Sample 3", "Low", "2025-10-23", "", "2025-10-01");        
         localStorage.setItem('projects', JSON.stringify(projectsArray));
     }
 }

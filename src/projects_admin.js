@@ -15,19 +15,11 @@ export const projectsManager = (function () {
         return currentProject;
     }
 
-    // Create a new task for the current project
-    function createTask(projectsArray, projectIndex, ID, Name, Description, Priority, Due_Date, Completed_Date, Created_Date) {
+    // Create a new sample task for the current project
+    function createSampleTask(projectsArray, projectIndex, ID, Name, Description, Priority, Due_Date, Completed_Date, Created_Date) {
         
         projectsArray[projectIndex].Tasks.push({Task_ID: ID, Task_Name: Name, Description: Description, Priority: Priority,
                                       Due_Date: Due_Date, Completed_Date: Completed_Date, Created_Date: Created_Date});
-        // Add 3 additional tasks manually (don't use passed parameters)
-        projectsArray[projectIndex].Tasks.push({Task_ID: 4, Task_Name: "Test 1", Description: "Sample 1", Priority: "Low",
-                                      Due_Date: "2025-10-21", Completed_Date: "", Created_Date: "2025-10-01"});
-        projectsArray[projectIndex].Tasks.push({Task_ID: 5, Task_Name: "Test 2", Description: "Sample 2", Priority: "High",
-                                      Due_Date: "2025-10-22", Completed_Date: "2025-10-19", Created_Date: "2025-10-01"});
-        projectsArray[projectIndex].Tasks.push({Task_ID: 6, Task_Name: "Test 3", Description: "Sample 3", Priority: "Low",
-                                      Due_Date: "2025-10-23", Completed_Date: "", Created_Date: "2025-10-01"});
-
         localStorage.setItem('projects', JSON.stringify(projectsArray));
 
         return
@@ -94,7 +86,7 @@ export const projectsManager = (function () {
     return {
         changeProject,
         getCurrentProject,
-        createTask,
+        createSampleTask,
         deleteCurrentProject,
         deleteCurrentTask,
         addProject,
