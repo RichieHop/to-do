@@ -38,6 +38,23 @@ header span{
   margin-left: 1.25rem;
 }
 
+/* Export to CSV input */
+#exportCSV {
+  color: #868383;
+  background-color: rgb(240, 181, 110);
+  float: right;
+  margin-right: 2rem;
+  height: 3rem;
+  width: 3rem;
+}
+
+#exportCSV:focus, #exportCSV:hover {
+  transform: scale(1.1);
+  transform-origin: 50% 50%;
+  box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.3);
+  transition: all .2s ease-out;
+}
+
 .pdf {
   font-weight: 600;
   font-size: 2.5rem;

@@ -6,7 +6,7 @@ export const projectsManager = (function () {
 
     // Check for clicks on the projects list
     function changeProject(e, project) {
-        // Set the current folder to the li item that was clicked
+        // Set the current project to the li item that was clicked
         currentProject = e.target.textContent;
     }
 

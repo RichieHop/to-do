@@ -4,6 +4,7 @@ import addIcon from "./images/add.png";
 import blankIcon from "./images/blank.png";
 import deleteIcon from "./images/delete.png";
 import editIcon from "./images/edit.png";
+import csvIcon from "./images/csv.png";
 
 import PdfHelpFile from "./images/to_do.pdf";
 
@@ -34,22 +35,20 @@ if (!localStorage.getItem('projects')) {
         {Name: 'Finance', ID: 8, Tasks: []},
         {Name: 'Food', ID: 9, Tasks: []},
         {Name: 'GP', ID: 10, Tasks: []},
-        {Name: 'PC', ID: 11, Tasks: []},
-        {Name: 'Test 1', ID: 12, Tasks: []},
-        {Name: 'Test 2', ID: 13, Tasks: []},
-        {Name: 'Test 3', ID: 14, Tasks: []},
-        {Name: 'Test 4', ID: 15, Tasks: []},
-        {Name: 'Test 5', ID: 16, Tasks: []}    
+        {Name: 'PC', ID: 11, Tasks: []}   
     ]
 
     // Sort the array by project name
     // projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
     // projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
     projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
-    // Add 3 tasks to the "Cars" project.
+    // Add 4 tasks to the "Cars" project.
     const projectIndex = projectsArray.findIndex(x => x.Name === "Car");
     if (projectIndex >= 0) {
-        projectsManager.createTask(projectsArray, projectIndex, 3, "Push Test", "Sample pushed task", "Low", "2025-10-30", "", "2025-10-07");
+        projectsManager.createTask(projectsArray, projectIndex, 3, "Yet Another Test", "Another test description", "Low", "2025-10-30", "", "2025-10-07");
+        projectsManager.createTask(projectsArray, projectIndex, 4, "Test 1", "Sample 1", "Low", "2025-10-21", "", "2025-10-01");
+        projectsManager.createTask(projectsArray, projectIndex, 5, "Test 2", "Sample 2", "High", "2025-10-22", "2025-10-19", "2025-10-01");
+        projectsManager.createTask(projectsArray, projectIndex, 6, "Test 3", "Sample 3", "Low", "2025-10-23", "", "2025-10-01");        
         localStorage.setItem('projects', JSON.stringify(projectsArray));
     }
 }
@@ -57,19 +56,51 @@ if (!localStorage.getItem('projects')) {
 import { projectsManager } from './projects_admin.js';
 
 export function loadProjects() {
-    // Add help icon and link to PDF document
+    // Add CSV export button
     const formHeader = document.querySelector('#title');
+    let csvLink = document.querySelector('#exportCSV');
+    if (csvLink === null) {
+        csvLink = document.createElement('input');
+        csvLink.src = csvIcon;
+        csvLink.title = "Export all to CSV";
+        csvLink.type = "image";
+        csvLink.setAttribute("id", "exportCSV");
+        formHeader.appendChild(csvLink);
+    }
+    
+    // Add help icon and link to PDF document
     let pdfLink = document.querySelector('#pdf');
     if (pdfLink === null) {
         pdfLink = document.createElement('a');
         pdfLink.href = PdfHelpFile;
-        pdfLink.target="blank";
+        pdfLink.target = "blank";
+        pdfLink.title = "Documentation";
         pdfLink.innerHTML = "?";
         pdfLink.classList.add('pdf');
         pdfLink.setAttribute("id", "pdf");
         formHeader.appendChild(pdfLink);
     }
     
+    // Add event listener for exporting to CSV
+    csvLink.addEventListener("click", e => {
+        var csvString = "Project" + "," + "Task" + "," + "Description" + "," + "Due Date" + "," + "Completed Date" + "," + "Priority" + "," + "Created Date" + "\n";
+        for (let i = 0; i < projectsArray.length; i++) {
+            csvString += projectsArray[i].Name + "\r\n";
+            for (let x = 0; x < projectsArray[i].Tasks.length; x++) {
+                csvString += "," + projectsArray[i].Tasks[x].Task_Name + "," + projectsArray[i].Tasks[x].Description + "," 
+                                + projectsArray[i].Tasks[x].Due_Date + "," + projectsArray[i].Tasks[x].Completed_Date + ","  
+                                + projectsArray[i].Tasks[x].Priority + "," + projectsArray[i].Tasks[x].Created_Date + "," + "\n";
+            }
+            csvString += "\r\n";
+        } 
+        csvString = "data:application/csv," + encodeURIComponent(csvString);
+        var x = document.createElement("A");
+        x.setAttribute("href", csvString );
+        x.setAttribute("download","To-Do Data.csv");
+        document.body.appendChild(x);
+        x.click();
+    });
+
     const projectsListContainer = document.querySelector('#projectsListContainer');
     projectsListContainer.innerHTML = '';
 
