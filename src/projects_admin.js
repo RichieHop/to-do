@@ -71,10 +71,24 @@ export const projectsManager = (function () {
     // Add a task
     function addTask(projectsArray, ProjectID, taskName, taskDescription, taskPriority, taskDueDate, taskCompletedDate) {
         // Get highest ID and add 1 to it
-        let maxID = projectsArray[ProjectID].Tasks.reduce((max, task) => max.Task_ID > task.Task_ID ? max : task).Task_ID + 1;
+        if (projectsArray[ProjectID].Tasks[0] === undefined) {
+            var maxID = 0
+        } else {
+            maxID = projectsArray[ProjectID].Tasks.reduce((max, task) => max.Task_ID > task.Task_ID ? max : task).Task_ID + 1;
+        }
         // Add the new task to projectsArray
         projectsArray[ProjectID].Tasks.push({Task_ID: maxID, Task_Name: taskName, Description: taskDescription, Priority: taskPriority,
                                       Due_Date: taskDueDate, Completed_Date: taskCompletedDate, Created_Date: ""});
+    }
+
+    // Edit a task
+    function editTask(projectsArray, ProjectID, taskIndex, taskName, taskDescription, taskPriority, taskDueDate, taskCompletedDate) {
+        // Edit the task in projectsArray
+        projectsArray[ProjectID].Tasks[taskIndex].Task_Name = taskName;
+        projectsArray[ProjectID].Tasks[taskIndex].Description = taskDescription;
+        projectsArray[ProjectID].Tasks[taskIndex].Priority = taskPriority;
+        projectsArray[ProjectID].Tasks[taskIndex].Due_Date = taskDueDate;
+        projectsArray[ProjectID].Tasks[taskIndex].Completed_Date = taskCompletedDate;
     }
 
     return {
@@ -85,7 +99,8 @@ export const projectsManager = (function () {
         deleteCurrentTask,
         addProject,
         editProject,
-        addTask
+        addTask,
+        editTask
     }
 })();
 

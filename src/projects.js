@@ -205,8 +205,8 @@ export function loadProjects() {
         projectTitle.textContent = projectsArray[i].Name;
         projectBody.appendChild(projectTitle);
 
-        // Set default folder font colour to blue.
-        if (projectsArray[i].Name === " Default") {
+        // Set current folder font colour to blue.
+        if (projectsArray[i].Name ===  projectsManager.getCurrentProject()) {
             projectTitle.style.color = "blue";
         }
 
@@ -431,6 +431,9 @@ export function loadTasks() {
         var addTaskHeader = document.getElementById("addTaskHeader");
         addTaskHeader.textContent = "Add a new task";
 
+        var addButton = document.getElementsByClassName("addTask")[0];
+        addButton.innerHTML = "Add";
+
         // Open the modal
         modal.style.display = "block";
         
@@ -538,7 +541,7 @@ export function loadTasks() {
                 taskBody.classList.add('task');
                 taskBody.classList.add(`priority-${projectsArray[i].Tasks[tasksIndex].Priority}`);
                 // Set the data index equal to the array counter, and data project equal to the project name
-                taskBody.setAttribute('data-index', i);
+                taskBody.setAttribute('data-index', x);
                 taskBody.setAttribute('data-project', `${projectsArray[i].Tasks[tasksIndex].Task_Name}`)
                         
                 // Create the task title
@@ -583,13 +586,123 @@ export function loadTasks() {
                 }
                 taskBody.appendChild(taskCompletedDate);
 
-                // // Add the edit icon.
+                // Add the edit icon.
                 let taskEditIcon = document.createElement('img');
                 taskEditIcon.classList.add('task_edit');
                 taskEditIcon.src = editIcon;
                 taskBody.appendChild(taskEditIcon);
 
-                // // Add the delete icon.
+                // _____________________________________________________________________________________________________
+                // Edit a task
+                // _____________________________________________________________________________________________________
+
+                // Add an event listener for the edit icon.
+                taskEditIcon.addEventListener("click", e => {
+
+                    // Get the array index of the clicked item
+                    var clickedTasksIndex = e.target.parentElement.dataset.index;
+
+                    // Get the modal
+                    var modal = document.getElementById("addTaskModal");
+                    // Set the modal header
+                    var addTaskHeader = document.getElementById("addTaskHeader");
+                    addTaskHeader.textContent = "Edit a task";
+
+                    var addButton = document.getElementsByClassName("addTask")[0];
+                    addButton.innerHTML = "Edit";
+
+                    // Open the modal
+                    modal.style.display = "block";
+                    
+                    // Clear errors, text and set focus on the project name
+                    document.getElementById('taskNameID').focus();
+
+                    var projectID = projectsArray.findIndex(x => x.Name === projectsManager.getCurrentProject());
+
+                    document.getElementById('taskNameID').value = projectsArray[projectID].Tasks[clickedTasksIndex].Task_Name;
+                    document.getElementById('taskDescriptionID').value = projectsArray[projectID].Tasks[clickedTasksIndex].Description;
+                    document.getElementById('taskPriorityID').value = projectsArray[projectID].Tasks[clickedTasksIndex].Priority;
+                    document.getElementById('taskDueDateID').value = projectsArray[projectID].Tasks[clickedTasksIndex].Due_Date;
+                    document.getElementById('taskCompletedDateID').value = projectsArray[projectID].Tasks[clickedTasksIndex].Completed_Date;
+
+                    document.getElementById("taskDueDateHelp").innerText = "Please enter a due date";
+                    document.getElementById("taskDueDateDiv").classList.remove('invalid');
+
+                    // Validate the form
+                    const myform = document.getElementById('addTask');
+                    myform.noValidate = true;
+                    myform.reset;
+
+                    // Custom form validation
+                    myform.addEventListener('submit', validateForm)
+
+                    // Execute once if validation is OK
+                    myform.addEventListener('submit', e => {
+                        e.preventDefault();
+                        if (e.submitter.className === "cancelTask") {
+                            myform.close;
+                            modal.style.display = "none";
+                            return true;
+                        } else {      
+                            // Actions after form has passed validation....
+                            projectsManager.editTask(projectsArray, projectID, clickedTasksIndex, myform.taskName.value, myform.taskDescription.value, myform.taskPriority.value, myform.taskDueDate.value, myform.taskCompletedDate.value);
+                            // Sort the array by project name
+                            projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
+                            localStorage.setItem('projects', JSON.stringify(projectsArray));
+                            loadProjects();
+                            loadTasks();
+                            myform.close;
+                            modal.style.display = "none";
+                            return true;
+                        }
+                    }, {once : true});
+
+                    // Form validation
+                    function validateForm(e) {
+                        if (e.submitter.className != "cancelTask") {
+                            const form = e.target;
+                            var field = Array.from(form.elements);
+                            // Reset fields
+                            field.forEach(i => {
+                                i.setCustomValidity('');
+                                i.parentElement.classList.remove('invalid');
+                            });
+
+                            // *** Don't check for due date prior to today when editing, only when adding ***
+
+                            // Add extra check for due date prior to today
+                            // var todaysDate = new Date().setHours(0,0,0,0);
+                            // var enteredDueDate = new Date(form.taskDueDate.value).setHours(0,0,0,0);
+                            // var err = "error";
+
+                            // if (field.name = "taskDueDate" && enteredDueDate < todaysDate) {
+                            //     document.getElementById("taskDueDateHelp").innerText = "Due date cannot be earlier than today";
+                            //     document.getElementById("taskDueDateDiv").classList.add('invalid');
+                            //     form.taskDueDate.setCustomValidity(err);
+                            // }
+
+                            // if (!form.checkValidity() || enteredDueDate < todaysDate) {
+                            if (!form.checkValidity()) {
+                                // Form is invalid - cancel submit
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
+                                // Apply invalid class
+                                field.forEach(i => {
+                                    if (!i.checkValidity()) {
+                                        // field is invalid - add class
+                                        i.parentElement.classList.add('invalid');
+                                    }
+                                    }
+                                );
+
+                                return false;
+                            }
+                            return true;
+                        }
+                    };
+                })
+
+                // Add the delete icon.
                 let taskDeleteIcon = document.createElement('img');
                 taskDeleteIcon.classList.add('task_delete');
                 taskDeleteIcon.src = deleteIcon;
