@@ -1,33 +1,64 @@
-import {format} from "date-fns"
+import {format, addDays} from "date-fns"
 
 import addIcon from "./images/add.png";
 import blankIcon from "./images/blank.png";
 import deleteIcon from "./images/delete.png";
 import editIcon from "./images/edit.png";
 import csvIcon from "./images/csv.png";
+import ganttIcon from "./images/gantt-chart.png";
 
 import PdfHelpFile from "./images/to_do.pdf";
 
 let projectsArray = [];
 
+// Format date as yyyy-mm-dd
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+var todayDate = formatDate(new Date());
+var taskCreatedDate = todayDate;
+var task1StartDate = formatDate(addDays(todayDate, 2));
+var task1DueDate = formatDate(addDays(todayDate, 5));
+var task1CompletedDate = formatDate(addDays(todayDate, 2));
+var task2StartDate = task1DueDate;
+var task2DueDate = formatDate(addDays(task2StartDate, 5));
+var task3StartDate = task2DueDate
+var task3DueDate = formatDate(addDays(task3StartDate, 5));
+var task4StartDate = task3DueDate
+var task4DueDate = formatDate(addDays(task4StartDate, 5));
+var task5StartDate = task4DueDate
+var task5DueDate = formatDate(addDays(task5StartDate, 5));
+var task6StartDate = task5DueDate
+var task6DueDate = formatDate(addDays(task6StartDate, 5));
+
 if (localStorage.getItem('projects')) {
     projectsArray = JSON.parse(localStorage.getItem('projects'));
     // Sort the array by project name
-    // projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
-    // projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
     projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
 }
 
 if (!localStorage.getItem('projects')) {
     projectsArray = [
         {Name: ' Default', ID: 1, Tasks: [{Task_ID: 1, Task_Name: "Test", Description: "Sample task for the default project", Priority: "Low",
-                                        Due_Date: "2025-10-30", Completed_Date: "", Created_Date: "2025-10-01"}]},
+                                           Due_Date: task1DueDate, Completed_Date: "", Created_Date: taskCreatedDate, Start_Date: task1StartDate, 
+                                           Dependencies: "", Progress: 20}]},
         {Name: 'Work', ID: 2, Tasks: [{Task_ID: 1, Task_Name: "Test", Description: "Sample task for the work project", Priority: "Low",
-                                        Due_Date: "2025-11-30", Completed_Date: "", Created_Date: "2025-10-01"}]},
+                                        Due_Date: task1DueDate, Completed_Date: "", Created_Date: taskCreatedDate, Start_Date: task1StartDate, Dependencies: "", Progress: 0}]},
         {Name: 'Car', ID: 3, Tasks: [{Task_ID: 1, Task_Name: "Service", Description: "Book service for December", Priority: "High",
-                                        Due_Date: "2025-10-31", Completed_Date: "", Created_Date: "2025-10-01"},
+                                        Due_Date: task1DueDate, Completed_Date: "", Created_Date: taskCreatedDate, Start_Date: task1StartDate, Dependencies: "", Progress: 50},
                                     {Task_ID: 2, Task_Name: "Dash-Cam", Description: "Check dash-cams with main dealer", Priority: "Medium",
-                                        Due_Date: "2025-11-30", Completed_Date: "", Created_Date: "2025-10-01"}]},
+                                        Due_Date: task2DueDate, Completed_Date: "", Created_Date: taskCreatedDate, Start_Date: task2StartDate, Dependencies: "1", Progress: 10}]},
         {Name: 'CSS', ID: 4, Tasks: []},
         {Name: 'JavaScript', ID: 5, Tasks: []},
         {Name: 'HTML', ID: 6, Tasks: []},
@@ -39,25 +70,35 @@ if (!localStorage.getItem('projects')) {
     ]
 
     // Sort the array by project name
-    // projectsArray.sort((a,b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
-    // projectsArray.sort((a, b) => a.Name.localeCompare(b.Name, 'en', {'sensitivity': 'base'}));
     projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
     // Add 4 tasks to the "Cars" project.
     const projectIndex = projectsArray.findIndex(x => x.Name === "Car");
     if (projectIndex >= 0) {
-        projectsManager.createSampleTask(projectsArray, projectIndex, 3, "Yet Another Test", "Another test description", "Low", "2025-10-30", "", "2025-10-07");
-        projectsManager.createSampleTask(projectsArray, projectIndex, 4, "Test 1", "Sample 1", "Low", "2025-10-21", "", "2025-10-01");
-        projectsManager.createSampleTask(projectsArray, projectIndex, 5, "Test 2", "Sample 2", "High", "2025-10-22", "2025-10-19", "2025-10-01");
-        projectsManager.createSampleTask(projectsArray, projectIndex, 6, "Test 3", "Sample 3", "Low", "2025-10-23", "", "2025-10-01");        
+        projectsManager.createSampleTask(projectsArray, projectIndex, 3, "Yet Another Test", "Another test description", "Low", task3DueDate, "", taskCreatedDate, task3StartDate, "2", 0);
+        projectsManager.createSampleTask(projectsArray, projectIndex, 4, "Test 1", "Sample 1", "Low", task4DueDate, "", taskCreatedDate, task4StartDate, "3", 0);
+        projectsManager.createSampleTask(projectsArray, projectIndex, 5, "Test 2", "Sample 2", "High", task5DueDate, "", taskCreatedDate, task5StartDate, "4", 0);
+        projectsManager.createSampleTask(projectsArray, projectIndex, 6, "Test 3", "Sample 3", "Low", task6DueDate, "", taskCreatedDate, task6StartDate, "5", 0);        
         localStorage.setItem('projects', JSON.stringify(projectsArray));
     }
 }
 
 import { projectsManager } from './projects_admin.js';
+import { ganttManager } from './gantt.js';
 
 export function loadProjects() {
-    // Add CSV export button
+    // Add gantt view button
     const formHeader = document.querySelector('#title');
+    let ganttLink = document.querySelector('#ganttIcon');
+    if (ganttLink === null) {
+        ganttLink = document.createElement('input');
+        ganttLink.src = ganttIcon;
+        ganttLink.title = "Toggle Gantt View for Current Project";
+        ganttLink.type = "image";
+        ganttLink.setAttribute("id", "ganttIcon");
+        formHeader.appendChild(ganttLink);
+    }
+    
+    // Add CSV export button
     let csvLink = document.querySelector('#exportCSV');
     if (csvLink === null) {
         csvLink = document.createElement('input');
@@ -81,15 +122,50 @@ export function loadProjects() {
         formHeader.appendChild(pdfLink);
     }
     
-    // Add event listener for exporting to CSV
+    // Add event listener for gantt.
+    ganttLink.addEventListener("click", e => {
+        let projectID = projectsArray.findIndex(x => x.Name === projectsManager.getCurrentProject());
+        // Only build the gantt if there are tasks in the current project.
+        if (projectsArray[projectID].Tasks[0] != undefined) {
+            projectsListContainer.style.display = projectsListContainer.style.display === 'none' ? '' : 'none';
+            tasksContainer.style.display = tasksContainer.style.display === 'none' ? '' : 'none';
+            var ganttDisplay = document.getElementById("ganttChartDiv");
+            var svgDiv = document.getElementById("svgDiv");
+
+            // Display or hide the chart.
+            if (ganttDisplay.style.display === 'none' || ganttDisplay.style.display === '' ) {
+                // Clear the current chart; clear all from svgDiv, then add element <svg id="gantt"></svg> to svgDiv
+                svgDiv.innerHTML = "";
+                let blankSVG = document.createElement('svg');
+                blankSVG.setAttribute("id", "gantt");
+                svgDiv.appendChild(blankSVG);
+                ganttDisplay.style.display = 'block';
+            } else {
+                ganttDisplay.style.display = 'none';
+            }
+            let projectID = projectsArray.findIndex(x => x.Name === projectsManager.getCurrentProject());
+            ganttManager.displayGantt(projectsArray[projectID], projectsManager.getCurrentProject());
+            // Sort the tasks by start date ascending
+            projectsArray[projectID].Tasks.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));
+            // Save any start or end dates modified in gantt view and reload tasks.
+            localStorage.setItem('projects', JSON.stringify(projectsArray));
+            loadTasks();
+        }
+    });
+
+
+    // Add event listener for exporting to CSV.
     csvLink.addEventListener("click", e => {
-        var csvString = "Project" + "," + "Task" + "," + "Description" + "," + "Due Date" + "," + "Completed Date" + "," + "Priority" + "," + "Created Date" + "\n";
+        var csvString = "Project" + "," + "Task" + "," + "Description" + "," + "Start Date" + "," + "Due Date" + "," + "Completed Date" + "," 
+                      + "Progress %" + ","  + "Task ID" + ","  + "Priority" + "," + "Created Date" + "\n";
         for (let i = 0; i < projectsArray.length; i++) {
             csvString += projectsArray[i].Name + "\r\n";
             for (let x = 0; x < projectsArray[i].Tasks.length; x++) {
                 csvString += "," + projectsArray[i].Tasks[x].Task_Name + "," + projectsArray[i].Tasks[x].Description + "," 
-                                + projectsArray[i].Tasks[x].Due_Date + "," + projectsArray[i].Tasks[x].Completed_Date + ","  
-                                + projectsArray[i].Tasks[x].Priority + "," + projectsArray[i].Tasks[x].Created_Date + "," + "\n";
+                                + projectsArray[i].Tasks[x].Start_Date + "," + projectsArray[i].Tasks[x].Due_Date + "," 
+                                + projectsArray[i].Tasks[x].Completed_Date + ","  + projectsArray[i].Tasks[x].Progress + "," 
+                                + projectsArray[i].Tasks[x].Task_ID + "," + projectsArray[i].Tasks[x].Priority + "," 
+                                + projectsArray[i].Tasks[x].Created_Date + "," + "\n";
             }
             csvString += "\r\n";
         } 
@@ -97,8 +173,12 @@ export function loadProjects() {
         var x = document.createElement("A");
         x.setAttribute("href", csvString );
         x.setAttribute("download","To-Do Data.csv");
+        x.setAttribute("id", "downloadCSV");
         document.body.appendChild(x);
         x.click();
+        // Remove the download element after use.
+        var downloadElement = document.getElementById("downloadCSV");
+        downloadElement.remove();
     });
 
     const projectsListContainer = document.querySelector('#projectsListContainer');
@@ -166,6 +246,14 @@ export function loadProjects() {
                 // Sort the array by project name and update local storage
                 projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
                 localStorage.setItem('projects', JSON.stringify(projectsArray));
+                
+                // Refresh the title
+                const formHeader = document.querySelector('#title');
+                formHeader.innerHTML = "";
+                const title = document.createElement('span');
+                title.textContent = "To-Do";
+                formHeader.appendChild(title);
+
                 loadProjects();
                 myform.close;
                 modal.style.display = "none";
@@ -303,6 +391,14 @@ export function loadProjects() {
                         // Sort the array by project name
                         projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
                         localStorage.setItem('projects', JSON.stringify(projectsArray));
+
+                        // Refresh the title
+                        const formHeader = document.querySelector('#title');
+                        formHeader.innerHTML = "";
+                        const title = document.createElement('span');
+                        title.textContent = "To-Do";
+                        formHeader.appendChild(title);
+
                         loadProjects();
                         myform.close;
                         modal.style.display = "none";
@@ -373,6 +469,14 @@ export function loadProjects() {
                 deleteButton.onclick = function() {
                     projectsManager.deleteCurrentProject(projectsArray, projectsArray[i].ID);
                     projectsArray = JSON.parse(localStorage.getItem('projects'));
+                
+                    // Refresh the title
+                    const formHeader = document.querySelector('#title');
+                    formHeader.innerHTML = "";
+                    const title = document.createElement('span');
+                    title.textContent = "To-Do";
+                    formHeader.appendChild(title);
+
                     loadProjects();
                     modal.style.display = "none";
                 }
@@ -426,6 +530,12 @@ export function loadTasks() {
     taskDescription.textContent = "Description";
     taskBody.appendChild(taskDescription);
 
+    // Create the task start date header
+    let taskStartDate = document.createElement('div');
+    taskStartDate.classList.add('task_start_date');
+    taskStartDate.textContent = "Start Date";
+    taskBody.appendChild(taskStartDate);
+
     // Create the task due date header
     let taskDueDate = document.createElement('div');
     taskDueDate.classList.add('task_due_date');
@@ -437,6 +547,18 @@ export function loadTasks() {
     taskCompletedDate.classList.add('task_completed_date');
     taskCompletedDate.textContent = "Completed Date";
     taskBody.appendChild(taskCompletedDate);
+
+    // Create the task progress header
+    let taskProgress = document.createElement('div');
+    taskProgress.classList.add('task_progress');
+    taskProgress.textContent = "Progress %";
+    taskBody.appendChild(taskProgress);
+
+    // Create the task ID header
+    let taskIDField = document.createElement('div');
+    taskIDField.classList.add('task_progress');
+    taskIDField.textContent = "Task ID";
+    taskBody.appendChild(taskIDField);
 
     // Create dummy edit header
     let taskEdit = document.createElement('div');
@@ -476,10 +598,15 @@ export function loadTasks() {
         document.getElementById('taskPriorityID').value = "Low";
         document.getElementById('taskDueDateID').value = "";
         document.getElementById('taskCompletedDateID').value = "";
+        document.getElementById('taskStartDateID').value = "";
+        document.getElementById('taskDependenciesID').value = "";
+        document.getElementById('taskProgressID').value = 0;
 
         document.getElementById("taskDueDateHelp").innerText = "Please enter a due date";
+        document.getElementById("taskStartDateHelp").innerText = "Please enter a start date";
         document.getElementById("taskDueDateDiv").classList.remove('invalid');
-
+        document.getElementById("taskStartDateDiv").classList.remove('invalid');
+    
         // Validate the form
         const myform = document.getElementById('addTask');
         myform.noValidate = true;
@@ -498,10 +625,24 @@ export function loadTasks() {
             } else {      
                 // Actions after form has passed validation....
                 let projectID = projectsArray.findIndex(x => x.Name === projectsManager.getCurrentProject());
-                projectsManager.addTask(projectsArray, projectID, myform.taskName.value, myform.taskDescription.value, myform.taskPriority.value, myform.taskDueDate.value, myform.taskCompletedDate.value);
+                projectsManager.addTask(projectsArray, projectID, myform.taskName.value, myform.taskDescription.value, 
+                                        myform.taskPriority.value, myform.taskDueDate.value, myform.taskCompletedDate.value,  taskCreatedDate,
+                                        myform.taskStartDate.value, myform.taskDependencies.value, myform.taskProgress.value);
+
                 // Sort the array by project name
                 projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
                 localStorage.setItem('projects', JSON.stringify(projectsArray));
+
+                // Sort the tasks by start date ascending
+                projectsArray[projectID].Tasks.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));
+
+                // Refresh the title
+                const formHeader = document.querySelector('#title');
+                formHeader.innerHTML = "";
+                const title = document.createElement('span');
+                title.textContent = "To-Do";
+                formHeader.appendChild(title);
+
                 loadProjects();
                 loadTasks();
                 myform.close;
@@ -512,7 +653,7 @@ export function loadTasks() {
 
         // Form validation
         function validateForm(e) {
-            if (e.submitter.className != "cancelTask") {
+            if (e.submitter.className != "cancelAddTask") {
                 const form = e.target;
                 var field = Array.from(form.elements);
                 // Reset fields
@@ -521,11 +662,20 @@ export function loadTasks() {
                     i.parentElement.classList.remove('invalid');
                 });
 
-                // Add extra check for due date prior to today
                 var todaysDate = new Date().setHours(0,0,0,0);
+                var enteredStartDate = new Date(form.taskStartDate.value).setHours(0,0,0,0);
+                todaysDate = new Date().setHours(0,0,0,0);
                 var enteredDueDate = new Date(form.taskDueDate.value).setHours(0,0,0,0);
                 var err = "error";
 
+                // Add extra check for start date after due date
+                if (field.name = "taskStartDate" && enteredStartDate > enteredDueDate) {
+                    document.getElementById("taskStartDateHelp").innerText = "Start date cannot be later than due date";
+                    document.getElementById("taskStartDateDiv").classList.add('invalid');
+                    form.taskStartDate.setCustomValidity(err);
+                }
+
+                // Add extra check for due date prior to today
                 if (field.name = "taskDueDate" && enteredDueDate < todaysDate) {
                     document.getElementById("taskDueDateHelp").innerText = "Due date cannot be earlier than today";
                     document.getElementById("taskDueDateDiv").classList.add('invalid');
@@ -562,8 +712,8 @@ export function loadTasks() {
         // Only select the current project if it has tasks
         if (projectsArray[i].Tasks[tasksIndex] != undefined && projectsArray[i].Name === projectsManager.getCurrentProject()) {
 
-            // Sort the tasks by due date ascending
-            projectsArray[i].Tasks.sort((a, b) => new Date(a.Due_Date) - new Date(b.Due_Date));
+            // Sort the tasks by start date ascending
+            projectsArray[i].Tasks.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));
 
             // Loop through all tasks for the current project
             for (var x = 0; x < projectsArray[i].Tasks.length; x++)  {
@@ -581,26 +731,39 @@ export function loadTasks() {
                 taskTitle.textContent = projectsArray[i].Tasks[tasksIndex].Task_Name;
                 taskBody.appendChild(taskTitle);
 
-                // // Create the task description
+                // Create the task description
                 taskDescription = document.createElement('div');
                 taskDescription.classList.add('task_description');
                 taskDescription.textContent = projectsArray[i].Tasks[tasksIndex].Description;
                 taskBody.appendChild(taskDescription);
 
-                // // Create the task due date, format dd/mm/yyyy.
-                taskDueDate = document.createElement('div');
-                taskDueDate.classList.add('task_due_date');
+                // Create the task start date, format dd/mm/yyyy.
+                taskStartDate = document.createElement('div');
+                taskStartDate.classList.add('task_start_date');
 
-                let dateObject = new Date(projectsArray[i].Tasks[tasksIndex].Due_Date); 
+                let dateObject = new Date(projectsArray[i].Tasks[tasksIndex].Start_Date); 
                 let dateYear = format(dateObject, 'yyyy');
                 let dateMonth = format(dateObject, 'MM');
                 let dateDay = format(dateObject, 'dd');
                 let dateDMY = `${dateDay}/${dateMonth}/${dateYear}`;
 
+                taskStartDate.textContent = dateDMY;
+                taskBody.appendChild(taskStartDate);
+
+                // Create the task due date, format dd/mm/yyyy.
+                taskDueDate = document.createElement('div');
+                taskDueDate.classList.add('task_due_date');
+
+                dateObject = new Date(projectsArray[i].Tasks[tasksIndex].Due_Date); 
+                dateYear = format(dateObject, 'yyyy');
+                dateMonth = format(dateObject, 'MM');
+                dateDay = format(dateObject, 'dd');
+                dateDMY = `${dateDay}/${dateMonth}/${dateYear}`;
+
                 taskDueDate.textContent = dateDMY;
                 taskBody.appendChild(taskDueDate);
 
-                // // Create the task completed date, format dd/mm/yyyy.
+                // Create the task completed date, format dd/mm/yyyy.
                 taskCompletedDate = document.createElement('div');
                 taskCompletedDate.classList.add('task_completed_date');
 
@@ -616,6 +779,18 @@ export function loadTasks() {
                     taskBody.classList.add('completed');
                 }
                 taskBody.appendChild(taskCompletedDate);
+
+                // Create the task progress
+                taskProgress = document.createElement('div');
+                taskProgress.classList.add('task_progress');
+                taskProgress.textContent = projectsArray[i].Tasks[tasksIndex].Progress;
+                taskBody.appendChild(taskProgress);
+
+                // Create the task ID
+                taskIDField = document.createElement('div');
+                taskIDField.classList.add('task_progress');
+                taskIDField.textContent = projectsArray[i].Tasks[tasksIndex].Task_ID;
+                taskBody.appendChild(taskIDField);
 
                 // Add the edit icon.
                 let taskEditIcon = document.createElement('img');
@@ -655,8 +830,12 @@ export function loadTasks() {
                     document.getElementById('taskPriorityID').value = projectsArray[projectID].Tasks[clickedTasksIndex].Priority;
                     document.getElementById('taskDueDateID').value = projectsArray[projectID].Tasks[clickedTasksIndex].Due_Date;
                     document.getElementById('taskCompletedDateID').value = projectsArray[projectID].Tasks[clickedTasksIndex].Completed_Date;
+                    document.getElementById('taskStartDateID').value = projectsArray[projectID].Tasks[clickedTasksIndex].Start_Date;
+                    document.getElementById('taskDependenciesID').value = projectsArray[projectID].Tasks[clickedTasksIndex].Dependencies;
+                    document.getElementById('taskProgressID').value = projectsArray[projectID].Tasks[clickedTasksIndex].Progress;
 
                     document.getElementById("taskDueDateHelp").innerText = "Please enter a due date";
+                    document.getElementById("taskStartDateHelp").innerText = "Please enter a start date";
                     document.getElementById("taskDueDateDiv").classList.remove('invalid');
 
                     // Validate the form
@@ -676,10 +855,20 @@ export function loadTasks() {
                             return true;
                         } else {      
                             // Actions after form has passed validation....
-                            projectsManager.editTask(projectsArray, projectID, clickedTasksIndex, myform.taskName.value, myform.taskDescription.value, myform.taskPriority.value, myform.taskDueDate.value, myform.taskCompletedDate.value);
+                            projectsManager.editTask(projectsArray, projectID, clickedTasksIndex, myform.taskName.value, myform.taskDescription.value, 
+                                                     myform.taskPriority.value, myform.taskDueDate.value, myform.taskCompletedDate.value, 
+                                                     myform.taskStartDate.value, myform.taskDependencies.value, myform.taskProgress.value);
                             // Sort the array by project name
                             projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
                             localStorage.setItem('projects', JSON.stringify(projectsArray));
+
+                            // Refresh the title
+                            const formHeader = document.querySelector('#title');
+                            formHeader.innerHTML = "";
+                            const title = document.createElement('span');
+                            title.textContent = "To-Do";
+                            formHeader.appendChild(title);
+
                             loadProjects();
                             loadTasks();
                             myform.close;
@@ -690,7 +879,7 @@ export function loadTasks() {
 
                     // Form validation
                     function validateForm(e) {
-                        if (e.submitter.className != "cancelTask") {
+                        if (e.submitter.className != "cancelAddTask") {
                             const form = e.target;
                             var field = Array.from(form.elements);
                             // Reset fields
@@ -698,6 +887,17 @@ export function loadTasks() {
                                 i.setCustomValidity('');
                                 i.parentElement.classList.remove('invalid');
                             });
+
+                            // Add extra check for start date after due date
+                            var enteredDueDate = new Date(form.taskDueDate.value).setHours(0,0,0,0);
+                            var enteredStartDate = new Date(form.taskStartDate.value).setHours(0,0,0,0);
+                            var err = "error";
+
+                            if (field.name = "taskStartDate" && enteredStartDate > enteredDueDate) {
+                                document.getElementById("taskStartDateHelp").innerText = "Start date cannot be later than due date";
+                                document.getElementById("taskStartDateDiv").classList.add('invalid');
+                                form.taskStartDate.setCustomValidity(err);
+                            }
 
                             // *** Don't check for due date prior to today when editing, only when adding ***
 
@@ -754,7 +954,7 @@ export function loadTasks() {
                     var deleteProjectHeader = document.getElementById("deleteTaskHeader");
                     deleteProjectHeader.textContent = `${taskName}`;
                     // Get the Cancel and Delete buttons.
-                    var cancelButton = document.getElementsByClassName("cancelTask")[0];
+                    var cancelButton = document.getElementsByClassName("cancelDeleteTask")[0];
                     var deleteButton = document.getElementsByClassName("deleteTask")[0];
                     // Open the modal
                     modal.style.display = "block";
@@ -766,6 +966,14 @@ export function loadTasks() {
                     // When the user clicks on Delete, delete the task
                     deleteButton.onclick = function() {
                         projectsManager.deleteCurrentTask(projectsArray, projectID, taskID);
+                
+                        // Refresh the title
+                        const formHeader = document.querySelector('#title');
+                        formHeader.innerHTML = "";
+                        const title = document.createElement('span');
+                        title.textContent = "To-Do";
+                        formHeader.appendChild(title);
+
                         loadProjects();
                         loadTasks();
                         modal.style.display = "none";

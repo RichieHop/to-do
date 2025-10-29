@@ -36,7 +36,7 @@
             <div class="modalAddContent">
                 <p id="addProjectHeader"></p><br>
                 <form id="addProject" action="./" method="post">
-                    <label class="addProjectText" for="projectName">Project Name:</label>
+                    <label class="addProjectText" for="projectNameID">Project Name:</label>
                     <input class="addProjectText" type="text" id="projectNameID" name="projectName" autofocus><br><br>
                     <p class="help" id ="projectNameHelp">Please enter a project name.</p>
                     <!-- <button class="addProject">Add</button> -->
@@ -54,18 +54,18 @@
                 <form id="addTask" action="./" method="post">
 
                     <div>
-                    <label for="taskName">Task Name:</label>
-                    <input type="text" id="taskNameID" name="taskName" required autofocus><br><br>
-                    <p class="help" id ="taskNameHelp">Please enter a task name.</p>
+                        <label for="taskNameID">Task Name:</label>
+                        <input type="text" id="taskNameID" name="taskName" required autofocus><br><br>
+                        <p class="help" id ="taskNameHelp">Please enter a task name.</p>
                     </div>
 
                     <div>
-                    <label for="taskDescription">Description:</label>
-                    <input type="text" id="taskDescriptionID" name="taskDescription" required><br><br>                    
-                    <p class="help" id ="taskDescriptionHelp">Please enter a task description.</p>
+                        <label for="taskDescriptionID">Description:</label>
+                        <input type="text" id="taskDescriptionID" name="taskDescription" required><br><br>                    
+                        <p class="help" id ="taskDescriptionHelp">Please enter a task description.</p>
                     </div>
 
-                    <label for="taskPriority">Priority:</label>
+                    <label for="taskPriorityID">Priority:</label>
                     <select id="taskPriorityID" name="taskPriority">
                         <option value="Low">Low</option>
                         <option value="Medium">Medium</option>
@@ -74,19 +74,36 @@
 
                     <br><br>
                     
+                    <div id="taskStartDateDiv">
+                        <label for="taskStartDateID">Start Date:</label>
+                        <input type="date" id="taskStartDateID" name="taskStartDate" required><br><br> 
+                        <p class="help" id ="taskStartDateHelp">Please enter a start date.</p>
+                    </div>
+
                     <div id="taskDueDateDiv">
-                    <label for="taskDueDate">Due Date:</label>
-                    <input type="date" id="taskDueDateID" name="taskDueDate" required><br><br> 
-                    <p class="help" id ="taskDueDateHelp">Please enter a due date.</p>
+                        <label for="taskDueDateID">Due Date:</label>
+                        <input type="date" id="taskDueDateID" name="taskDueDate" required><br><br> 
+                        <p class="help" id ="taskDueDateHelp">Please enter a due date.</p>
                     </div>
 
                     <div>
-                    <label for="taskCompletedDate">Completed Date:</label>
-                    <input type="date" id="taskCompletedDateID" name="taskCompletedDate"><br><br>
+                        <label for="taskCompletedDateID">Completed Date:</label>
+                        <input type="date" id="taskCompletedDateID" name="taskCompletedDate"><br><br>
                     </div>
 
+                    <div>
+                        <label for="taskDependenciesID">Dependencies:</label>
+                        <input type="text" id="taskDependenciesID" value = "" name="taskDependencies"><br><br>
+                    </div>
+
+                    <div>
+                        <label for="taskProgressID">Progress %:</label>
+                        <input type="number" min="0" max="100" pattern= "^(?:[0-9]|[1-9][0-9]|100)$" value = 0 id="taskProgressID" name="taskProgress"><br><br>
+                        <p class="help" id ="taskProgressHelp">Please enter an integer value between 0 and 100.</p>
+                </div>
+
                     <button class="addTask" type="submit">Add</button>                    
-                    <button class="cancelTask" type="submit">Cancel</button>
+                    <button class="cancelAddTask" type="submit">Cancel</button>
                 </form>
             </div>
         </div>
@@ -98,9 +115,26 @@
                 <p id="deleteTaskHeader"></p>
                 <p>Are you sure you want to delete this task?</p>
                 <button class="deleteTask">Delete</button>
-                <button class="cancelTask">Cancel</button>
+                <button class="cancelDeleteTask">Cancel</button>
             </div>
         </div>
+
+        <div class="ganttChartDiv" id="ganttChartDiv">
+            <p class="chart-label">Timescale: <span id="current-timescale">Day</span></p> 
+
+            <div id = "svgDiv">
+                <svg id="gantt"></svg>
+            </div>
+
+            <div class="chart-controls">
+                <p>Change Chart Timescale</p>
+                <div class="button-cont">
+                    <button id="day-btn">Day</button>
+                    <button id="week-btn">Week</button>
+                    <button id="month-btn">Month</button>
+                </div>
+            </div>
+        </div>            
 
     </body>
 

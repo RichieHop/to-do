@@ -16,10 +16,11 @@ export const projectsManager = (function () {
     }
 
     // Create a new sample task for the current project
-    function createSampleTask(projectsArray, projectIndex, ID, Name, Description, Priority, Due_Date, Completed_Date, Created_Date) {
+    function createSampleTask(projectsArray, projectIndex, ID, Name, Description, Priority, Due_Date, Completed_Date, Created_Date, Start_Date, Dependencies, Progress) {
         
         projectsArray[projectIndex].Tasks.push({Task_ID: ID, Task_Name: Name, Description: Description, Priority: Priority,
-                                      Due_Date: Due_Date, Completed_Date: Completed_Date, Created_Date: Created_Date});
+                                                Due_Date: Due_Date, Completed_Date: Completed_Date, Created_Date: Created_Date, Start_Date: Start_Date, 
+                                                Dependencies: Dependencies, Progress: Progress});
         localStorage.setItem('projects', JSON.stringify(projectsArray));
 
         return
@@ -61,7 +62,7 @@ export const projectsManager = (function () {
     }
 
     // Add a task
-    function addTask(projectsArray, ProjectID, taskName, taskDescription, taskPriority, taskDueDate, taskCompletedDate) {
+    function addTask(projectsArray, ProjectID, taskName, taskDescription, taskPriority, taskDueDate, taskCompletedDate, taskCreatedDate, taskStartDate, taskDependencies, taskProgress) {
         // Get highest ID and add 1 to it
         if (projectsArray[ProjectID].Tasks[0] === undefined) {
             var maxID = 0
@@ -70,17 +71,21 @@ export const projectsManager = (function () {
         }
         // Add the new task to projectsArray
         projectsArray[ProjectID].Tasks.push({Task_ID: maxID, Task_Name: taskName, Description: taskDescription, Priority: taskPriority,
-                                      Due_Date: taskDueDate, Completed_Date: taskCompletedDate, Created_Date: ""});
+                                             Due_Date: taskDueDate, Completed_Date: taskCompletedDate, Created_Date: taskCreatedDate, Start_Date: taskStartDate, 
+                                             Dependencies: taskDependencies, Progress: taskProgress});
     }
 
     // Edit a task
-    function editTask(projectsArray, ProjectID, taskIndex, taskName, taskDescription, taskPriority, taskDueDate, taskCompletedDate) {
+    function editTask(projectsArray, ProjectID, taskIndex, taskName, taskDescription, taskPriority, taskDueDate, taskCompletedDate, taskStartDate, taskDependencies, taskProgress) {
         // Edit the task in projectsArray
         projectsArray[ProjectID].Tasks[taskIndex].Task_Name = taskName;
         projectsArray[ProjectID].Tasks[taskIndex].Description = taskDescription;
         projectsArray[ProjectID].Tasks[taskIndex].Priority = taskPriority;
         projectsArray[ProjectID].Tasks[taskIndex].Due_Date = taskDueDate;
         projectsArray[ProjectID].Tasks[taskIndex].Completed_Date = taskCompletedDate;
+        projectsArray[ProjectID].Tasks[taskIndex].Start_Date = taskStartDate;
+        projectsArray[ProjectID].Tasks[taskIndex].Dependencies = taskDependencies;
+        projectsArray[ProjectID].Tasks[taskIndex].Progress = taskProgress;
     }
 
     return {
