@@ -618,7 +618,7 @@ export function loadTasks() {
         // Execute once if validation is OK
         myform.addEventListener('submit', e => {
             e.preventDefault();
-            if (e.submitter.className === "cancelTask") {
+            if (e.submitter.className === "cancelAddTask") {
                 myform.close;
                 modal.style.display = "none";
                 return true;
@@ -849,7 +849,7 @@ export function loadTasks() {
                     // Execute once if validation is OK
                     myform.addEventListener('submit', e => {
                         e.preventDefault();
-                        if (e.submitter.className === "cancelTask") {
+                        if (e.submitter.className === "cancelAddTask") {
                             myform.close;
                             modal.style.display = "none";
                             return true;
