@@ -340,7 +340,7 @@ header span{
 }
 
 /* Modal delete (background) */
-.modalDelete, .modalAdd {
+.modalDelete, .modalAdd, .modalExport {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -353,11 +353,16 @@ header span{
   /*background-color: rgba(0,0,0,0.4); Black w/ opacity */
 }
 
+/* .modalExport {
+  display: none;
+} */
+
 /* Modal Header */
 #deleteProjectHeader,
 #deleteTaskHeader,
 #addProjectHeader,
-#addTaskHeader {
+#addTaskHeader,
+#optionsHeader {
   background-color: rgb(240, 181, 110);
   font-size: 2rem;
   margin: 0;
@@ -366,7 +371,8 @@ header span{
 
 /* Modal Content */
 .modalDeleteContent,
-.modalAddContent {
+.modalAddContent,
+.modalExportContent {
   background-color: bisque;
   margin: 5% auto; 
   padding: 2rem;
@@ -375,11 +381,36 @@ header span{
 }
 
 label{
-    display: inline-block;
-    clear: left;
-    width: 25%;
-    text-align: right;
+  display: inline-block;
+  clear: left;
+  width: 25%;
+  text-align: right;
 }
+
+.modalExport label {
+  display: inline-block;
+  clear: left;
+  width: 80%;
+  text-align: left;
+  margin-top: 0.25rem;
+}
+
+.dateRangesClass label {
+  display: inline-block;
+  width: 25%;
+  text-align: left;
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
+.dateRangesClass input {
+  display: inline-block;
+  width: 25%;
+  text-align: left;
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
 input {
   display: inline-block;
 }
@@ -398,7 +429,8 @@ input {
 
 /* Cancel, Add and Delete buttons */
 .cancelProject, .deleteProject, .addProject,
-.cancelAddTask, .cancelDeleteTask, .deleteTask, .addTask {
+.cancelAddTask, .cancelDeleteTask, .deleteTask, .addTask,
+.exportCSV, .cancelCSV {
   color: #aaa;
   background-color: bisque;
   float: right;
@@ -411,7 +443,8 @@ input {
 .cancelProject:focus, .cancelProject:hover, .deleteProject:focus, .deleteProject:hover,
 .addProject:focus, .addProject:hover,
 .cancelTask:focus, .cancelTask:hover, .deleteTask:focus, .deleteTask:hover,
-.addTask:focus, .addTask:hover {
+.addTask:focus, .addTask:hover,
+.exportCSV:focus, .exportCSV:hover, .cancelCSV:focus, .cancelCSV:hover {
   color: black;
   text-decoration: none;
   cursor: pointer;

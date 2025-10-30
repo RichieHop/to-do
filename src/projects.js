@@ -156,30 +156,103 @@ export function loadProjects() {
 
     // Add event listener for exporting to CSV.
     csvLink.addEventListener("click", e => {
-        var csvString = "Project" + "," + "Task" + "," + "Description" + "," + "Start Date" + "," + "Due Date" + "," + "Completed Date" + "," 
-                      + "Progress %" + ","  + "Task ID" + ","  + "Priority" + "," + "Created Date" + "\n";
-        for (let i = 0; i < projectsArray.length; i++) {
-            csvString += projectsArray[i].Name + "\r\n";
-            for (let x = 0; x < projectsArray[i].Tasks.length; x++) {
-                csvString += "," + projectsArray[i].Tasks[x].Task_Name + "," + projectsArray[i].Tasks[x].Description + "," 
-                                + projectsArray[i].Tasks[x].Start_Date + "," + projectsArray[i].Tasks[x].Due_Date + "," 
-                                + projectsArray[i].Tasks[x].Completed_Date + ","  + projectsArray[i].Tasks[x].Progress + "," 
-                                + projectsArray[i].Tasks[x].Task_ID + "," + projectsArray[i].Tasks[x].Priority + "," 
-                                + projectsArray[i].Tasks[x].Created_Date + "," + "\n";
+        // Get the modal
+        var modal = document.getElementById("exportCSVModal");
+        // Get the modal header
+        var optionsHeader = document.getElementById("optionsHeader");
+        optionsHeader.textContent = "CSV Export Options";
+        // Get the date ranges
+        var dateRanges = document.getElementById("dateRangesID");
+        var fromDate = document.getElementById("fromDateID");
+        var toDate = document.getElementById("toDateID");
+        fromDate.value = todayDate;
+        toDate.value = formatDate(addDays(todayDate, 90));
+        // Get the Cancel and Delete buttons.
+        var cancelButton = document.getElementsByClassName("cancelCSV")[0];
+        var exportButton = document.getElementsByClassName("exportCSV")[0];
+        // Open the modal
+        modal.style.display = "block";
+        // dateRanges.style.display = "none";
+        // When the user clicks on Cancel, close the modal
+        cancelButton.onclick = function() {
+            modal.style.display = "none";
+            return;
+        }
+        // When the user clicks on Export, use the options to produce a CSV
+        exportButton.onclick = function() {
+            var ele = document.getElementsByName('exportChoice');
+            for (let i = 0; i < ele.length; i++) {
+                if (ele[i].checked)
+                var selectedOption = ele[i].value;
             }
-            csvString += "\r\n";
-        } 
-        csvString = "data:application/csv," + encodeURIComponent(csvString);
-        var x = document.createElement("A");
-        x.setAttribute("href", csvString );
-        x.setAttribute("download","To-Do Data.csv");
-        x.setAttribute("id", "downloadCSV");
-        document.body.appendChild(x);
-        x.click();
-        // Remove the download element after use.
-        var downloadElement = document.getElementById("downloadCSV");
-        downloadElement.remove();
-    });
+            
+            var csvString = "Project" + "," + "Task" + "," + "Description" + "," + "Start Date" + "," + "Due Date" + "," + "Completed Date" + "," 
+                        + "Progress %" + ","  + "Task ID" + ","  + "Priority" + "," + "Created Date" + "\n";
+
+            var exportArray = [];
+
+            // Use returned selection to build array to export
+            switch (selectedOption) {
+                case "all":
+                    // Use all of projectsArray
+                    exportArray = projectsArray;
+                    break;
+                case "current":
+                    // Use tasks for current project from projectsArray
+                    exportArray = projectsArray.filter(function (project) {return project.Name === projectsManager.getCurrentProject()});
+                    break;
+                case "allByDate":
+                    // Get a date range; need to add hidden fields for date range
+                    dateRanges.style.display = "block";
+                    // Map projectsArray for tasks with dates within the filters
+                    exportArray = projectsArray.map((element) => {
+                        return {...element, Tasks: element.Tasks.filter((tasks) => tasks.Start_Date >= fromDate.value && tasks.Due_Date <= toDate.value)};
+                    })
+                    // Remove elements with no tasks
+                    exportArray = exportArray.filter(projects => {
+                        return projects.Tasks.length != 0;
+                    })
+                    break;
+                case "currentByDate":
+                    // Use tasks for current project from projectsArray
+                    exportArray = projectsArray.filter(function (project) {return project.Name === projectsManager.getCurrentProject()});
+                    // Map projectsArray for tasks with dates within the filters
+                    exportArray = exportArray.map((element) => {
+                        return {...element, Tasks: element.Tasks.filter((tasks) => tasks.Start_Date >= fromDate.value && tasks.Due_Date <= toDate.value)};
+                    })
+                    // Remove elements with no tasks
+                    exportArray = exportArray.filter(projects => {
+                        return projects.Tasks.length != 0;
+                    })
+            }
+            
+            for (let i = 0; i < exportArray.length; i++) {
+                csvString += exportArray[i].Name + "\r\n";
+                for (let x = 0; x < exportArray[i].Tasks.length; x++) {
+                    csvString += "," + exportArray[i].Tasks[x].Task_Name + "," + exportArray[i].Tasks[x].Description + "," 
+                                    + exportArray[i].Tasks[x].Start_Date + "," + exportArray[i].Tasks[x].Due_Date + "," 
+                                    + exportArray[i].Tasks[x].Completed_Date + ","  + exportArray[i].Tasks[x].Progress + "," 
+                                    + exportArray[i].Tasks[x].Task_ID + "," + exportArray[i].Tasks[x].Priority + "," 
+                                    + exportArray[i].Tasks[x].Created_Date + "," + "\n";
+                }
+                csvString += "\r\n";
+            } 
+            csvString = "data:application/csv," + encodeURIComponent(csvString);
+            var x = document.createElement("A");
+            x.setAttribute("href", csvString );
+            x.setAttribute("download","To-Do Data.csv");
+            x.setAttribute("id", "downloadCSV");
+            document.body.appendChild(x);
+            x.click();
+            // Remove the download element after use.
+            var downloadElement = document.getElementById("downloadCSV");
+            downloadElement.remove();
+
+            exportArray = [];
+
+            modal.style.display = "none";
+        }   
+    })
 
     const projectsListContainer = document.querySelector('#projectsListContainer');
     projectsListContainer.innerHTML = '';
