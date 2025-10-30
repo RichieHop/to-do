@@ -119,6 +119,50 @@
             </div>
         </div>
 
+        <!-- Export CSV modal -->
+        <div id="exportCSVModal" class="modalExport">
+            <!-- Export options -->
+            <div class="modalExportContent">
+                <p id="optionsHeader"></p>
+                <br>
+                <fieldset>
+                    <legend>Select what to export:</legend>
+                    <div>
+                        <input type="radio" id="csvExportAll" name="exportChoice" value="all" checked />
+                        <label for="csvExportAll">All tasks from all projects</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="csvExportCurrent" name="exportChoice" value="current" />
+                        <label for="csvExportCurrent">All tasks from the current project</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="csvExportAllByDate" name="exportChoice" value="allByDate" />
+                        <label for="csvExportAllByDate">Tasks from all projects by date range</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="csvExportCurrentByDate" name="exportChoice" value="currentByDate" />
+                        <label for="csvExportCurrentByDate">Tasks from the current project by date range</label>
+                    </div>                    
+                </fieldset>
+                <br>
+                <div class = "dateRangesClass" id="dateRangesID">
+                    <p><b>Enter date ranges for options 3 and 4</b></p>
+                    <div>
+                        <label for="fromDateID">Enter from date:</label>
+                        <input type="date" id="fromDateID" name="fromDate"/>
+                        <br>
+                    </div>
+                    <div>
+                        <label for="toDateID">Enter to date:</label>  
+                        <input type="date" id="toDateID" name="toDate"/>
+                        <br><br>
+                    </div>
+                </div>
+                <button class="exportCSV">Export</button>
+                <button class="cancelCSV">Cancel</button>
+            </div>
+        </div>
+
         <div class="ganttChartDiv" id="ganttChartDiv">
             <p class="chart-label">Timescale: <span id="current-timescale">Day</span></p> 
 
