@@ -6,6 +6,7 @@ import deleteIcon from "./images/delete.png";
 import editIcon from "./images/edit.png";
 import csvIcon from "./images/csv.png";
 import ganttIcon from "./images/gantt-chart.png";
+import projectIconImage from "./images/project.png";
 
 import PdfHelpFile from "./images/to_do.pdf";
 
@@ -316,18 +317,21 @@ export function loadProjects() {
             } else {      
                 // Actions after form has passed validation.... add the new project to the array
                 projectsManager.addProject(projectsArray, document.getElementById("projectNameID").value);
-                // Sort the array by project name and update local storage
-                projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
-                localStorage.setItem('projects', JSON.stringify(projectsArray));
-                
-                // Refresh the title
+
+                // Refresh form header in order to allow gantt display
                 const formHeader = document.querySelector('#title');
                 formHeader.innerHTML = "";
+                let projectIconLink = document.createElement('img');
+                projectIconLink.src = projectIconImage;
+                projectIconLink.setAttribute("id", "projectIcon");
+                formHeader.appendChild(projectIconLink);
                 const title = document.createElement('span');
                 title.textContent = "To-Do";
                 formHeader.appendChild(title);
 
+                // projectsArray = JSON.parse(localStorage.getItem('projects'));
                 loadProjects();
+                loadTasks();
                 myform.close;
                 modal.style.display = "none";
                 return true;
@@ -461,18 +465,20 @@ export function loadProjects() {
                     } else {      
                         // Actions after form has passed validation....
                         projectsManager.editProject(projectsArray, document.getElementById('projectNameID').value, oldName);
-                        // Sort the array by project name
-                        projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
-                        localStorage.setItem('projects', JSON.stringify(projectsArray));
 
-                        // Refresh the title
+                        // Refresh the form header in order to allow gantt display
                         const formHeader = document.querySelector('#title');
                         formHeader.innerHTML = "";
+                        let projectIconLink = document.createElement('img');
+                        projectIconLink.src = projectIconImage;
+                        projectIconLink.setAttribute("id", "projectIcon");
+                        formHeader.appendChild(projectIconLink);
                         const title = document.createElement('span');
                         title.textContent = "To-Do";
                         formHeader.appendChild(title);
 
                         loadProjects();
+                        loadTasks();
                         myform.close;
                         modal.style.display = "none";
                         return true;
@@ -542,15 +548,20 @@ export function loadProjects() {
                 deleteButton.onclick = function() {
                     projectsManager.deleteCurrentProject(projectsArray, projectsArray[i].ID);
                     projectsArray = JSON.parse(localStorage.getItem('projects'));
-                
-                    // Refresh the title
+                    
+                    // Refresh the form header in order to allow gantt display
                     const formHeader = document.querySelector('#title');
                     formHeader.innerHTML = "";
+                    let projectIconLink = document.createElement('img');
+                    projectIconLink.src = projectIconImage;
+                    projectIconLink.setAttribute("id", "projectIcon");
+                    formHeader.appendChild(projectIconLink);
                     const title = document.createElement('span');
                     title.textContent = "To-Do";
                     formHeader.appendChild(title);
 
                     loadProjects();
+                    loadTasks();
                     modal.style.display = "none";
                 }
             })
@@ -702,16 +713,13 @@ export function loadTasks() {
                                         myform.taskPriority.value, myform.taskDueDate.value, myform.taskCompletedDate.value,  taskCreatedDate,
                                         myform.taskStartDate.value, myform.taskDependencies.value, myform.taskProgress.value);
 
-                // Sort the array by project name
-                projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
-                localStorage.setItem('projects', JSON.stringify(projectsArray));
-
-                // Sort the tasks by start date ascending
-                projectsArray[projectID].Tasks.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));
-
-                // Refresh the title
+                // Refresh the form header in order to allow gantt display
                 const formHeader = document.querySelector('#title');
                 formHeader.innerHTML = "";
+                let projectIconLink = document.createElement('img');
+                projectIconLink.src = projectIconImage;
+                projectIconLink.setAttribute("id", "projectIcon");
+                formHeader.appendChild(projectIconLink);
                 const title = document.createElement('span');
                 title.textContent = "To-Do";
                 formHeader.appendChild(title);
@@ -931,13 +939,14 @@ export function loadTasks() {
                             projectsManager.editTask(projectsArray, projectID, clickedTasksIndex, myform.taskName.value, myform.taskDescription.value, 
                                                      myform.taskPriority.value, myform.taskDueDate.value, myform.taskCompletedDate.value, 
                                                      myform.taskStartDate.value, myform.taskDependencies.value, myform.taskProgress.value);
-                            // Sort the array by project name
-                            projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
-                            localStorage.setItem('projects', JSON.stringify(projectsArray));
 
-                            // Refresh the title
+                            // Refresh the form header in order to allow gantt display
                             const formHeader = document.querySelector('#title');
                             formHeader.innerHTML = "";
+                            let projectIconLink = document.createElement('img');
+                            projectIconLink.src = projectIconImage;
+                            projectIconLink.setAttribute("id", "projectIcon");
+                            formHeader.appendChild(projectIconLink);
                             const title = document.createElement('span');
                             title.textContent = "To-Do";
                             formHeader.appendChild(title);
@@ -1039,10 +1048,14 @@ export function loadTasks() {
                     // When the user clicks on Delete, delete the task
                     deleteButton.onclick = function() {
                         projectsManager.deleteCurrentTask(projectsArray, projectID, taskID);
-                
-                        // Refresh the title
+
+                        // Refresh the form header in order to allow gantt display
                         const formHeader = document.querySelector('#title');
                         formHeader.innerHTML = "";
+                        let projectIconLink = document.createElement('img');
+                        projectIconLink.src = projectIconImage;
+                        projectIconLink.setAttribute("id", "projectIcon");
+                        formHeader.appendChild(projectIconLink);
                         const title = document.createElement('span');
                         title.textContent = "To-Do";
                         formHeader.appendChild(title);

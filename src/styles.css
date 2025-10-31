@@ -68,6 +68,16 @@ header span{
   margin-left: 1.25rem;
 }
 
+/* Project icon*/
+#projectIcon {
+  color: #868383;
+  /* background-color: rgb(240, 181, 110); */
+  float: right;
+  margin-left: 0.25rem;
+  height: 3rem;
+  width: 3rem;
+}
+
 /* Gantt chart input*/
 #ganttIcon {
   color: #868383;

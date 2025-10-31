@@ -8,7 +8,7 @@ export const ganttManager = (function () {
 
         // Use projectsArray for the current project to build the tasks array used by the gantt chart.
         projectsArray.Tasks.forEach(task => {
-            tasks.push ({id: task.Task_ID, name: task.Task_Name, start: task.Start_Date, end: task.Due_Date, progress: task.Progress, dependencies: task.Dependencies});
+            tasks.push ({id: task.Task_ID, name: task.Task_Name, start: task.Start_Date, end: task.Due_Date, progress: task.Progress, dependencies: task.Dependencies, custom_class: ""});
         })
 
         // Set the overdue class if the task end date is less than today and it's not fully complete.
@@ -68,9 +68,24 @@ export const ganttManager = (function () {
                 let newTaskEnd = addDaysToDate(task.end, startEndDiff);
                 task.end = newTaskEnd;
 
+                // Update the overdue class
+                // endDate = new Date(task.end).setHours(0,0,0,0);
+                // console.log(tasks, task);
+                // if (endDate < todaysDate && task.progress != 100) {
+                //     tasks[task.id - 1].custom_class = 'overdue';
+                // } else {
+                //     tasks[task.id - 1].custom_class = '';
+                // }
+
                 // Update the task start and end dates in projectsArray.
                 projectsArray.Tasks[task.id - 1].Start_Date = task.start;
                 projectsArray.Tasks[task.id - 1].Due_Date = task.end;
+            },
+
+            // Get the new task progress percentage if it's changed
+            on_progress_change: function(task) {
+                // Update the progress in projectsArray.
+                projectsArray.Tasks[task.id - 1].Progress = task.progress;
             },
 
             // Change popup text when clicking a task.

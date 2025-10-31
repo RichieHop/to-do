@@ -21,8 +21,9 @@ export const projectsManager = (function () {
         projectsArray[projectIndex].Tasks.push({Task_ID: ID, Task_Name: Name, Description: Description, Priority: Priority,
                                                 Due_Date: Due_Date, Completed_Date: Completed_Date, Created_Date: Created_Date, Start_Date: Start_Date, 
                                                 Dependencies: Dependencies, Progress: Progress});
+        // Sort the tasks by start date ascending
+        projectsArray[projectIndex].Tasks.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));
         localStorage.setItem('projects', JSON.stringify(projectsArray));
-
         return
     }
 
@@ -31,6 +32,7 @@ export const projectsManager = (function () {
         // Delete the project with the ID matching the one passed in the function parameters.
         projectsArray = projectsArray.filter(a => a.ID != projectID);
         localStorage.setItem('projects', JSON.stringify(projectsArray));
+        currentProject = " Default";
     }
 
     // Delete the current task
@@ -50,6 +52,9 @@ export const projectsManager = (function () {
         let maxID = projectsArray.reduce((max, project) => max.ID > project.ID ? max : project).ID + 1;
         // Add the new project to projectsArray
         projectsArray.push({Name: newProject, ID: maxID, Tasks: []});
+        projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
+        localStorage.setItem('projects', JSON.stringify(projectsArray));
+        currentProject = newProject;
     }
 
     // Edit a project
@@ -58,6 +63,12 @@ export const projectsManager = (function () {
         // Only edit the array if the project is found.
         if (index > -1) {
             projectsArray[index].Name = newName;
+            // Sort the array by project name
+            projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
+            // Sort the tasks by start date ascending
+            projectsArray[index].Tasks.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));
+            localStorage.setItem('projects', JSON.stringify(projectsArray));
+            currentProject = newName;
         }
     }
 
@@ -73,6 +84,8 @@ export const projectsManager = (function () {
         projectsArray[ProjectID].Tasks.push({Task_ID: maxID, Task_Name: taskName, Description: taskDescription, Priority: taskPriority,
                                              Due_Date: taskDueDate, Completed_Date: taskCompletedDate, Created_Date: taskCreatedDate, Start_Date: taskStartDate, 
                                              Dependencies: taskDependencies, Progress: taskProgress});
+        projectsArray[ProjectID].Tasks.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));
+        localStorage.setItem('projects', JSON.stringify(projectsArray));
     }
 
     // Edit a task
@@ -86,6 +99,11 @@ export const projectsManager = (function () {
         projectsArray[ProjectID].Tasks[taskIndex].Start_Date = taskStartDate;
         projectsArray[ProjectID].Tasks[taskIndex].Dependencies = taskDependencies;
         projectsArray[ProjectID].Tasks[taskIndex].Progress = taskProgress;
+        // Sort the array by project name
+        projectsArray.sort((a, b) => ("" + a.Name).localeCompare(b.Name, undefined, {numeric: true}));
+        // Sort the tasks by start date ascending
+        projectsArray[ProjectID].Tasks.sort((a, b) => new Date(a.Start_Date) - new Date(b.Start_Date));        
+        localStorage.setItem('projects', JSON.stringify(projectsArray));
     }
 
     return {
