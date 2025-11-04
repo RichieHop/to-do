@@ -181,6 +181,7 @@ export function loadProjects() {
         }
         // When the user clicks on Export, use the options to produce a CSV
         exportButton.onclick = function() {
+            var fileNameToSave = "";
             var ele = document.getElementsByName('exportChoice');
             for (let i = 0; i < ele.length; i++) {
                 if (ele[i].checked)
@@ -197,10 +198,12 @@ export function loadProjects() {
                 case "all":
                     // Use all of projectsArray
                     exportArray = projectsArray;
+                    fileNameToSave = "To-Do Data All Projects.csv";
                     break;
                 case "current":
                     // Use tasks for current project from projectsArray
                     exportArray = projectsArray.filter(function (project) {return project.Name === projectsManager.getCurrentProject()});
+                    fileNameToSave = "To-Do Data for " + projectsManager.getCurrentProject() + " Project.csv";
                     break;
                 case "allByDate":
                     // Get a date range; need to add hidden fields for date range
@@ -213,6 +216,7 @@ export function loadProjects() {
                     exportArray = exportArray.filter(projects => {
                         return projects.Tasks.length != 0;
                     })
+                    fileNameToSave = "To-Do Data All Projects " + fromDate.value + " to " + toDate.value + ".csv";
                     break;
                 case "currentByDate":
                     // Use tasks for current project from projectsArray
@@ -225,8 +229,9 @@ export function loadProjects() {
                     exportArray = exportArray.filter(projects => {
                         return projects.Tasks.length != 0;
                     })
+                    fileNameToSave = "To-Do Data for " + projectsManager.getCurrentProject() + " Project "  + fromDate.value + " to " + toDate.value + ".csv";
             }
-            
+          
             for (let i = 0; i < exportArray.length; i++) {
                 csvString += exportArray[i].Name + "\r\n";
                 for (let x = 0; x < exportArray[i].Tasks.length; x++) {
@@ -241,7 +246,7 @@ export function loadProjects() {
             csvString = "data:application/csv," + encodeURIComponent(csvString);
             var x = document.createElement("A");
             x.setAttribute("href", csvString );
-            x.setAttribute("download","To-Do Data.csv");
+            x.setAttribute("download", fileNameToSave);
             x.setAttribute("id", "downloadCSV");
             document.body.appendChild(x);
             x.click();
