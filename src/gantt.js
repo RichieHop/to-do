@@ -26,9 +26,10 @@ export const ganttManager = (function () {
             tasksIndex ++;
         });
 
+        // Format date as yyyy-mm-dd
         const getYYYYMMDD = date => date.toISOString().split("T")[0];
         
-        // Format date as yyyy-mm-dd
+        // Calculate days difference between 2 dates
         function dateDiff(oldDate, newDate) {
             const date1 = new Date(oldDate);
             const date2 = new Date(newDate);
@@ -86,6 +87,13 @@ export const ganttManager = (function () {
             on_progress_change: function(task) {
                 // Update the progress in projectsArray.
                 projectsArray.Tasks[task.id - 1].Progress = task.progress;
+                // Update the completed date if progress is 100%
+                if (task.progress === 100) {
+                    projectsArray.Tasks[task.id - 1].Completed_Date = getYYYYMMDD(new Date());
+                } else {
+                    projectsArray.Tasks[task.id - 1].Completed_Date = "";
+                    }
+
             },
 
             // Change popup text when clicking a task.
